@@ -6,32 +6,34 @@ import java.util.Scanner;
 
 public class Main {
     public static Scanner sc = new Scanner(System.in);
+    public static StringBuilder sb = new StringBuilder();
     public static Flight fl;
-    public static List<Flight> flightList = new ArrayList<Flight>();
+    public static List<Flight> flightList = new ArrayList<>();
     public static void main(String[] args) {
 
-        //Aircraft aircraft = new Aircraft();
+        Aircraft aircraft = new Aircraft();
         mainP();
     }
 
 
     public static void mainP(){
 
-        int opcion=0;
+        int option=0;
         Scanner sc = new Scanner(System.in);
-        while (opcion!=3){
-            System.out.println("---------------------------------");
-            System.out.println("FLIGHTS MANAGER\n"+
-                    "Select an option\n"+
-                    "1. Add Flight\n"+
-                    "2. Flights list\n"+
-                    "3. Update flight\n"+
-                    "4. Exit");
-            System.out.println("---------------------------------");
+        while (option!=3){
+            sb.append("-----------------------------------------\n");
+            sb.append("FLIGHTS MANAGER\n");
+            sb.append("Select an option\n");
+            sb.append("1. Add flight\n");
+            sb.append("2. Flights list\n");
+            sb.append("3. Update flights\n");
+            sb.append("4. Exit\n");
+            sb.append("------------------------------------------");
+            System.out.println(sb);
 
-            opcion  = Integer.parseInt(sc.next());
+            option  = Integer.parseInt(sc.next());
 
-            switch (opcion){
+            switch (option){
 
                 case 1:
                     addFlight();
@@ -81,12 +83,12 @@ public class Main {
     }
 
     public static void seeFlights(){
-        /*fl.setIdFlight(1);
+        fl.setIdFlight(1);
         fl.setCode("A2W3k1");
         fl.setDepartureCity("Los Angeles");
         fl.setArrivalCity("San Salvador");
         fl.setStatus("On Time");
-        flightList.add(fl);*/
+        flightList.add(fl);
         System.out.println("LISTA DE VUELOS:");
         System.out.println("---------------------------------");
         for (Flight f: flightList) {
@@ -104,11 +106,12 @@ public class Main {
     public  static void updateFlight(){
         clean();
         Scanner sc = new Scanner(System.in);
-        int op=0;
-        System.out.println("Select an option: \n"+
-                "1. Update Status\n"+
-                "2. Update Time\n"+
-                "3. Return main");
+        int op;
+        sb.append("Select an option: \n");
+        sb.append("1. Update Status\n");
+        sb.append("2. Update Time\n");
+        sb.append("3. Return main");
+        System.out.println(sb);
         op = Integer.parseInt(sc.next());
         switch (op){
             case 1:
