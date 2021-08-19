@@ -43,7 +43,7 @@ public class Main {
 
     public static void main(String[] args) throws GeneralSecurityException, IOException {
 
-        sheet.test();
+        //sheet.test();
         sb.setLength(0);
         Aircraft aircraft = new Aircraft();
         Flight flightTmp = new Flight();
@@ -69,21 +69,8 @@ public class Main {
         flightServices.changeStatus(flightStatusList.get(0),flightTmp,flightList);
         flightServices.printElements(flightList);
 
-
-
-        countryList = countryServices.setElements();
-        countryServices.printElements(countryList);
-
-        cityList = cityServices.setElements(countryList);
-        cityListByCountry = cityServices.elementsByCountry(2,cityList);
-        cityServices.printElements(cityListByCountry);
-*/
-
+        Menu.main();
     }
-
-
-
-
 
 
 
