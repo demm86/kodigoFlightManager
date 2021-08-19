@@ -3,8 +3,7 @@ package projectSolid.Service;
 import java.util.Scanner;
 
 import static projectSolid.Main.sb;
-import static projectSolid.Service.MenuActions.getFlightInfo;
-import static projectSolid.Service.MenuActions.printFlight;
+import static projectSolid.Service.MenuActions.*;
 
 public class Menu {
     public static void main() {
@@ -34,7 +33,7 @@ public class Menu {
                     printFlight();
                     break;
                 case 3:
-                    System.out.println("3");
+                    updateFlight();
                     break;
                 case 4:
                     System.out.println("Bye-bye");

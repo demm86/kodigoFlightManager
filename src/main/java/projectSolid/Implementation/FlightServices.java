@@ -11,6 +11,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FlightServices implements IFlightServices, IEmail {
+
+    public boolean flightExists= false;
+
+    @Override
+    public List<Flight> searchFlightById(int id, List<Flight> list) {
+        List<Flight> flightFound = new ArrayList<>();
+        for(Flight flight: list){
+            if(flight.getId() == id){
+                flightFound.add(flight);
+                flightExists=true;
+            }
+        }
+        return flightFound;
+    }
+
     @Override
     public List<Flight> listByStatus(FlightStatus status ,List<Flight> list) {
 
