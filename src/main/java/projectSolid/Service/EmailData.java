@@ -16,6 +16,6 @@ public class EmailData {
         public EmailData(){
             this.sender ="emre21011992@gmail.com";
             this.password = "Carlos@92";
-            this.receiver = "i.latinbrenes11@gmail.com";
+            this.receiver = "guevaraguilar90@gmail.com";
         }
 }
