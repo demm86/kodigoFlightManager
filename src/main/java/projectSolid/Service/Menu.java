@@ -3,6 +3,7 @@ package projectSolid.Service;
 import java.util.Scanner;
 
 import static projectSolid.Main.sb;
+import static projectSolid.Service.MenuActions.*;
 import static projectSolid.Service.MenuAcciones.getinfoFlight;
 import static projectSolid.Service.MenuAcciones.printFlight;
 import static projectSolid.Service.MenuAcciones.sendEmail;
@@ -10,7 +11,7 @@ import static projectSolid.Service.MenuAcciones.sendEmail;
 public class Menu {
     public static void main() {
         int option=0;
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         while (option!=3){
             sb.setLength(0);
@@ -25,18 +26,18 @@ public class Menu {
             sb.append("------------------------------------------");
             System.out.println(sb);
 
-            option  = Integer.parseInt(sc.next());
+            option  = Integer.parseInt(scanner.next());
 
             switch (option){
 
                 case 1:
-                    getinfoFlight();
+                    getFlightInfo();
                     break;
                 case 2:
                     printFlight();
                     break;
                 case 3:
-                    System.out.println("3");
+                    updateFlight();
                     break;
                 case 4:
                     System.out.println("Bye-bye");

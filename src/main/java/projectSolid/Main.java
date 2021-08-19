@@ -2,7 +2,6 @@ package projectSolid;
 
 import projectSolid.Entities.*;
 import projectSolid.Implementation.*;
-import projectSolid.Service.EmailData;
 import projectSolid.Service.Menu;
 import projectSolid.Service.MenuAcciones;
 import projectSolid.Service.Sheet;
@@ -63,14 +62,31 @@ public class Main {
         flightServices.add(flightTmp,flightList);
         flightServices.printElements(flightList);
 
-        flightStatusList = flightStatusServices.setElements();
-        flightStatusServices.printElements(flightStatusList);
+        Menu.main();
+
+
+
+        /*
+
 
         flightServices.changeStatus(flightStatusList.get(0),flightTmp,flightList);
         flightServices.printElements(flightList);
 
-        Menu.main();
+
+
+        countryList = countryServices.setElements();
+        countryServices.printElements(countryList);
+
+        cityList = cityServices.setElements(countryList);
+        cityListByCountry = cityServices.elementsByCountry(2,cityList);
+        cityServices.printElements(cityListByCountry);
+*/
+
     }
+
+
+
+
 
 
 
