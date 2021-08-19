@@ -6,18 +6,18 @@ import projectSolid.Main;
 
 import java.util.Scanner;
 
-public class MenuAcciones {
+public class MenuActions {
 
-    public static void getinfoFlight() {
+    public static void getFlightInfo() {
 
         Flight flight;
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         try {
             flight = new Flight();
-            System.out.println("type the flight id");
-            flight.setId(Integer.parseInt(sc.next()));
-            System.out.println("type the flight code");
-            flight.setCode(sc.next());
+            System.out.println("Type the flight id");
+            flight.setId(Integer.parseInt(scanner.next()));
+            System.out.println("Type the flight code");
+            flight.setCode(scanner.next());
             flight.setAircraft(Main.aircraftList.get(1));
             flight.setFlightStatus(Main.flightStatusList.get(1));
 
