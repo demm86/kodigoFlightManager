@@ -16,7 +16,7 @@ public class CityServices implements ICityServices {
         cities.add(new City(1, "SAL", "San Salvador", list.get(0) ));
 
         cities.add(new City(2, "LAX", "Los Angeles",list.get(1)));
-        cities.add(new City(3, "MIA", "Miami", list.get(2)));
+        cities.add(new City(3, "MIA", "Miami", list.get(1)));
 
         return cities;
 
