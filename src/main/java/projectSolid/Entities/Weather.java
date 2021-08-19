@@ -1,6 +1,7 @@
-package projectSolid;
+package projectSolid.Entities;
 
 import lombok.Data;
+import projectSolid.Entities.Airport;
 
 import java.time.LocalDateTime;
 

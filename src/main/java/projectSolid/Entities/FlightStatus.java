@@ -1,11 +1,10 @@
-package projectSolid;
+package projectSolid.Entities;
 
 import lombok.Data;
 
 @Data
-public class Airline {
+public class FlightStatus {
     private int id;
     private String code;
     private String name;
-    private Country country;
 }

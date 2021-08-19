@@ -1,23 +1,14 @@
-package projectSolid;
+package projectSolid.Implementation;
 
-import lombok.Data;
+import projectSolid.Entities.Country;
+import projectSolid.Interfaces.ICountryServices;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
-public class Country {
-    private int id;
-    private String code;
-    private String name;
-
-    public Country(int id, String code, String name){
-        this.id = id;
-        this.code = code;
-        this.name = name;
-    }
-
-    public List<Country> getCountries(){
+public class CountryServices  implements ICountryServices {
+    @Override
+    public List<Country> setCountry() {
         List<Country> countries = new ArrayList<>();
 
         countries.add(new Country(1, "503", "El Salvador"));
@@ -39,5 +30,10 @@ public class Country {
         countries.add(new Country(15, "91", "India"));
 
         return countries;
+    }
+
+    @Override
+    public void printElements(List<Country> list) {
+        System.out.println("Country list:"+list);
     }
 }

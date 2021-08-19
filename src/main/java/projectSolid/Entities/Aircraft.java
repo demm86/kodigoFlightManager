@@ -1,4 +1,4 @@
-package projectSolid;
+package projectSolid.Entities;
 import lombok.Data;
 
 @Data

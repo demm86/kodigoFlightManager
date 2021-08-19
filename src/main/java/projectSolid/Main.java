@@ -1,5 +1,12 @@
 package projectSolid;
 
+import projectSolid.Entities.Aircraft;
+import projectSolid.Entities.City;
+import projectSolid.Entities.Country;
+import projectSolid.Entities.Flight;
+import projectSolid.Implementation.CityServices;
+import projectSolid.Implementation.CountryServices;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,10 +16,28 @@ public class Main {
     public static StringBuilder sb = new StringBuilder();
     public static Flight fl;
     public static List<Flight> flightList = new ArrayList<>();
+    public static City city = new City();
+    public static List<City> cityList = new ArrayList<>();
+    public static List<City> cityListByCountry = new ArrayList<>();
+    public static CityServices cityServices = new  CityServices();
+
+    public static List<Country> countryList = new ArrayList<>();
+    public static CountryServices countryServices = new  CountryServices();
+
+
+
     public static void main(String[] args) {
 
         Aircraft aircraft = new Aircraft();
-        mainP();
+
+        countryList = countryServices.setCountry();
+        countryServices.printElements(countryList);
+
+        cityList = cityServices.setCity(countryList);
+        cityListByCountry = cityServices.elementsByCountry(2,cityList);
+        cityServices.printElements(cityListByCountry);
+
+
     }
 
 
@@ -66,11 +91,11 @@ public class Main {
             System.out.println("type the flight code");
             fl.setCode(sc.nextLine());
             System.out.println("type the departure city");
-            fl.setDepartureAirport((Airport));
+           // fl.setDepartureAirport((Airport));
             System.out.println("Type the arrival city");
-            fl.setArrivalCity(sc.nextLine());
+           // fl.setArrivalCity(sc.nextLine());
             System.out.println("Type the status of the flight");
-            fl.setStatus(sc.nextLine());
+            //fl.setStatus(sc.nextLine());
             flightList.add(fl);
 
             System.out.println("Flight added successfully");
@@ -83,6 +108,7 @@ public class Main {
     }
 
     public static void seeFlights(){
+        /*
         fl.setIdFlight(1);
         fl.setCode("A2W3k1");
         fl.setDepartureCity("Los Angeles");
@@ -100,11 +126,11 @@ public class Main {
             System.out.println("---------------------------------");
             System.out.println();
         }
-
+*/
     }
 
     public  static void updateFlight(){
-        clean();
+        //clean();
         Scanner sc = new Scanner(System.in);
         int op;
         sb.append("Select an option: \n");

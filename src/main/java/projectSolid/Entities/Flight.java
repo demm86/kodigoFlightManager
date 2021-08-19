@@ -1,4 +1,4 @@
-package projectSolid;
+package projectSolid.Entities;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
