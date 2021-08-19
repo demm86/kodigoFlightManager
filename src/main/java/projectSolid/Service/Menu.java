@@ -5,6 +5,7 @@ import java.util.Scanner;
 import static projectSolid.Main.sb;
 import static projectSolid.Service.MenuAcciones.getinfoFlight;
 import static projectSolid.Service.MenuAcciones.printFlight;
+import static projectSolid.Service.MenuAcciones.sendEmail;
 
 public class Menu {
     public static void main() {
@@ -20,6 +21,7 @@ public class Menu {
             sb.append("2. Flights list\n");
             sb.append("3. Update flights\n");
             sb.append("4. Exit\n");
+            sb.append("5. Send Email\n");
             sb.append("------------------------------------------");
             System.out.println(sb);
 
@@ -40,6 +42,8 @@ public class Menu {
                     System.out.println("Bye-bye");
                     System.exit(0);
                     break;
+                case 5:
+                    sendEmail();
             }
 
         }
