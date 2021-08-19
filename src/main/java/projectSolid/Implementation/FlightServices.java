@@ -51,12 +51,33 @@ public class FlightServices implements IFlightServices, IEmail {
 
     @Override
     public void printElements(List<Flight> list) {
-        System.out.println("Flight list:"+list);
+
+        System.out.println("Flight List:");
+        System.out.println("---------------------------------");
+        for (Flight flight: list) {
+            System.out.println("ID: " + flight.getId() + "\n" +
+                    "Code: " + flight.getCode() + "\n" +
+                    "Departure: " + flight.getArrivalAirport() + "\n" +
+                    "Arrival: " + flight.getArrivalAirport() + "\n" +
+                    "Status: " + flight.getFlightStatus()+ "\n" +
+                    "Aircraft: " + flight.getAircraft().getModel()+ "\n");
+            System.out.println("---------------------------------");
+            System.out.println();
+
+        }
     }
 
     @Override
-    public List<Flight> add(Flight fight, List<Flight> list) {
-        list.add(fight);
+    public List<Flight> add(Flight flight, List<Flight> list) {
+
+        int indexTmp;
+        indexTmp = list.indexOf(flight);
+
+        if( indexTmp == -1) {
+            list.add(flight);
+        }
+
+
         return list ;
     }
 
