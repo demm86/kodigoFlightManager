@@ -5,6 +5,8 @@ import projectSolid.Implementation.*;
 import projectSolid.Service.Menu;
 import projectSolid.Service.Sheet;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -29,9 +31,11 @@ public class Main {
 
     public static List<FlightStatus> flightStatusList = new ArrayList<>();
 
+    public static Sheet sheet = new Sheet();
+
+
     public static AircraftServices aircraftServices = new AircraftServices();
     public static List<Aircraft> aircraftList = new ArrayList<>();
-    public static Sheet sheet = new Sheet();
 
 
 
