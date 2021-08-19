@@ -32,9 +32,8 @@ public class MenuAcciones {
             System.out.println("Flight added successfully");
 
 
-
-        }catch (Exception e){
-            System.out.println("Error adding flight: "+ e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error adding flight: " + e.getMessage());
         }
 
     }
@@ -45,18 +44,18 @@ public class MenuAcciones {
         try {
 
             Main.flightServices.printElements(Main.flightList);
-        }catch (Exception e){
-            System.out.println("Error printing flight"+ e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error printing flight" + e.getMessage());
         }
 
     }
 
-    public static void sendEmail(){
+    public static void sendEmail() {
         EmailData data = new EmailData();
 
         Properties properties = new Properties();
 
-        properties.put("mail.smtp.host","smtp.gmail.com");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");
         //properties.put("mail.smtp.starttls.enable","true");
@@ -71,21 +70,21 @@ public class MenuAcciones {
             int idVuelo;
             String code;
             String status;
-            Scanner sc  = new Scanner(System.in);
+            Scanner sc = new Scanner(System.in);
             message.addRecipients(Message.RecipientType.TO, String.valueOf(new InternetAddress(data.getReceiver())));
             printFlight();
             System.out.println("type the iD Flight");
             id = Integer.parseInt(sc.next());
-            for (Flight f: Main.flightList) {
-                if(id == f.getId()){
+            for (Flight f : Main.flightList) {
+                if (id == f.getId()) {
                     idVuelo = f.getId();
                     code = f.getCode();
-                    status  = f.getFlightStatus().getName();
+                    status = f.getFlightStatus().getName();
                     message.setSubject("Esto es una prueba");
-                    message.setText("Datos de vuelo: \n"+
-                            "ID Flight: " + idVuelo+"\n"+
-                            "Code: "+ code+"\n"+
-                            "Status: "+status);
+                    message.setText("Datos de vuelo: \n" +
+                            "ID Flight: " + idVuelo + "\n" +
+                            "Code: " + code + "\n" +
+                            "Status: " + status);
                     Transport transport = session.getTransport("smtp");
                     transport.connect("smtp.gmail.com", data.getSender(), data.getPassword());
                     transport.sendMessage(message, message.getAllRecipients());
@@ -95,10 +94,8 @@ public class MenuAcciones {
             }
 
 
-
-
-
-        } catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
+}
