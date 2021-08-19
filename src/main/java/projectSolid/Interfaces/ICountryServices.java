@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ICountryServices {
 
-        List<Country> setCountry();
+        List<Country> setElements();
         void printElements(List<Country> list);
 
 

@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface IFlightServices {
 
-     List<Flight> flightsByStatus(FlightStatus status,List<Flight> list);
-     List<Flight> flightsByDepartureAirport(Airport airport,List<Flight> list);
-     List<Flight> flightsByArrivalAirport(Airport airport,List<Flight> list);
-     void printFlight(List<Flight> list);
-     List<Flight> addFlight(Flight fight,List<Flight> list);
-     List<Flight> changeStatusFlight(FlightStatus status,Flight flight, List<Flight> list);
+     List<Flight> listByStatus(FlightStatus status,List<Flight> list);
+     List<Flight> listByDepartureAirport(Airport airport,List<Flight> list);
+     List<Flight> listByArrivalAirport(Airport airport,List<Flight> list);
+     void printElements(List<Flight> list);
+     List<Flight> add(Flight fight,List<Flight> list);
+     List<Flight> changeStatus(FlightStatus status,Flight flight, List<Flight> list);
 
 }

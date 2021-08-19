@@ -40,21 +40,21 @@ public class Main {
         flightTmp.setId(1);
         flightTmp.setCode("test");
 
-        flightServices.addFlight(flightTmp,flightList);
-        flightServices.printFlight(flightList);
+        flightServices.add(flightTmp,flightList);
+        flightServices.printElements(flightList);
 
         flightStatusList = flightStatusServices.setElements();
         flightStatusServices.printElements(flightStatusList);
 
-        flightServices.changeStatusFlight(flightStatusList.get(0),flightTmp,flightList);
-        flightServices.printFlight(flightList);
+        flightServices.changeStatus(flightStatusList.get(0),flightTmp,flightList);
+        flightServices.printElements(flightList);
 
 
 
-        countryList = countryServices.setCountry();
+        countryList = countryServices.setElements();
         countryServices.printElements(countryList);
 
-        cityList = cityServices.setCity(countryList);
+        cityList = cityServices.setElements(countryList);
         cityListByCountry = cityServices.elementsByCountry(2,cityList);
         cityServices.printElements(cityListByCountry);
 

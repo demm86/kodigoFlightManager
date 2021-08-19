@@ -12,7 +12,7 @@ import java.util.List;
 
 public class FlightServices implements IFlightServices, IEmail {
     @Override
-    public List<Flight> flightsByStatus(FlightStatus status ,List<Flight> list) {
+    public List<Flight> listByStatus(FlightStatus status ,List<Flight> list) {
 
         List<Flight> flightByStatus = new ArrayList<>();
         for(Flight flight: list){
@@ -25,7 +25,7 @@ public class FlightServices implements IFlightServices, IEmail {
     }
 
     @Override
-    public List<Flight>  flightsByDepartureAirport(Airport airport,List<Flight> list) {
+    public List<Flight>  listByDepartureAirport(Airport airport,List<Flight> list) {
 
         List<Flight> flightByDeparture= new ArrayList<>();
         for(Flight flight: list){
@@ -38,7 +38,7 @@ public class FlightServices implements IFlightServices, IEmail {
     }
 
     @Override
-    public List<Flight> flightsByArrivalAirport(Airport airport,List<Flight> list) {
+    public List<Flight> listByArrivalAirport(Airport airport,List<Flight> list) {
         List<Flight> flightByArrival= new ArrayList<>();
         for(Flight flight: list){
             if(flight.getArrivalAirport().getId() == airport.getId()){
@@ -50,18 +50,18 @@ public class FlightServices implements IFlightServices, IEmail {
     }
 
     @Override
-    public void printFlight(List<Flight> list) {
+    public void printElements(List<Flight> list) {
         System.out.println("Flight list:"+list);
     }
 
     @Override
-    public List<Flight> addFlight(Flight fight, List<Flight> list) {
+    public List<Flight> add(Flight fight, List<Flight> list) {
         list.add(fight);
         return list ;
     }
 
     @Override
-    public List<Flight> changeStatusFlight(FlightStatus status,Flight flight, List<Flight> list) {
+    public List<Flight> changeStatus(FlightStatus status,Flight flight, List<Flight> list) {
         Flight flightTmp = new Flight();
 
         int indexTmp;

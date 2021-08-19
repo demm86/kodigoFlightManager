@@ -5,7 +5,7 @@ import projectSolid.Entities.Flight;
 import projectSolid.Entities.FlightStatus;
 
 @Data
-public class Notes {
+public class Note {
     private int id;
     private String code;
     private String name;

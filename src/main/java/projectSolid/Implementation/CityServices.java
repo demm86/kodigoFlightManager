@@ -10,7 +10,7 @@ import java.util.List;
 public class CityServices implements ICityServices {
 
     @Override
-    public  List<City> setCity(List<Country> list) {
+    public  List<City> setElements(List<Country> list) {
         List<City> cities = new ArrayList<>();
 
         cities.add(new City(1, "SAL", "San Salvador", list.get(0) ));
