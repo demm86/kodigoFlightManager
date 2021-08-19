@@ -12,5 +12,15 @@ public class Aircraft {
     private double tankCapacity;
 
 
+    public Aircraft(int id, String model){
+        this.ID = id;
+        this.model = model;
+
+    }
+
+    public Aircraft(){
+
+    }
+
 
 }

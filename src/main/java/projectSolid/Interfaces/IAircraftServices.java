@@ -6,6 +6,6 @@ import projectSolid.Entities.Airport;
 import java.util.List;
 
 public interface IAircraftServices {
-    List<Aircraft> setAircraft();
+    List<Aircraft> setElements();
     void printElements(List<Aircraft> list);
 }
