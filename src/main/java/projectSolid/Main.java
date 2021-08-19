@@ -1,11 +1,10 @@
 package projectSolid;
 
-import projectSolid.Entities.Aircraft;
-import projectSolid.Entities.City;
-import projectSolid.Entities.Country;
-import projectSolid.Entities.Flight;
+import projectSolid.Entities.*;
 import projectSolid.Implementation.CityServices;
 import projectSolid.Implementation.CountryServices;
+import projectSolid.Implementation.FlightServices;
+import projectSolid.Implementation.FlightStatusServices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +24,32 @@ public class Main {
     public static CountryServices countryServices = new  CountryServices();
 
 
+    public static FlightServices flightServices = new  FlightServices();
+    public static FlightStatusServices flightStatusServices = new  FlightStatusServices();
+
+
+    public static List<FlightStatus> flightStatusList = new ArrayList<>();
+
+
 
     public static void main(String[] args) {
 
         Aircraft aircraft = new Aircraft();
+        Flight flightTmp = new Flight();
+
+        flightTmp.setId(1);
+        flightTmp.setCode("test");
+
+        flightServices.addFlight(flightTmp,flightList);
+        flightServices.printFlight(flightList);
+
+        flightStatusList = flightStatusServices.setElements();
+        flightStatusServices.printElements(flightStatusList);
+
+        flightServices.changeStatusFlight(flightStatusList.get(0),flightTmp,flightList);
+        flightServices.printFlight(flightList);
+
+
 
         countryList = countryServices.setCountry();
         countryServices.printElements(countryList);
