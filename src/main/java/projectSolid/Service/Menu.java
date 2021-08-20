@@ -9,7 +9,7 @@ public class Menu {
         int option=0;
         Scanner scanner = new Scanner(System.in);
 
-        while (option!=3){
+        while (option!=6){
             sb.setLength(0);
             sb.append("-----------------------------------------\n");
             sb.append("FLIGHTS MANAGER\n");
