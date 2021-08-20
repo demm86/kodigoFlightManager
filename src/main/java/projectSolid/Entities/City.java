@@ -13,7 +13,7 @@ public class City {
     private String name;
     private Country country;
 
-    //private List<City> cities = new ArrayList<>();
+    public City(){}
 
     public City(int id, String code, String name, Country country){
         this.id = id;
@@ -21,10 +21,4 @@ public class City {
         this.name = name;
         this.country = country;
     }
-
-    public City(){
-    }
-
-
-
 }
