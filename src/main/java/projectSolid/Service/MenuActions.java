@@ -167,6 +167,8 @@ public class MenuActions {
             int id;
             int idVuelo;
             String code;
+            String DepAirport;
+            String ArrAriport;
             String status;
             Scanner sc = new Scanner(System.in);
             message.addRecipients(Message.RecipientType.TO, String.valueOf(new InternetAddress(data.getReceiver())));
@@ -177,10 +179,14 @@ public class MenuActions {
                 if (id == f.getId()) {
                     idVuelo = f.getId();
                     code = f.getCode();
+                    DepAirport = f.getDepartureAirport().getName();
+                    ArrAriport = f.getArrivalAirport().getName();
                     status = f.getFlightStatus().getName();
                     message.setSubject("Esto es una prueba");
                     message.setText("Datos de vuelo: \n" +
                             "ID Flight: " + idVuelo + "\n" +
+                            "Departure Airport: "+ DepAirport +"\n"+
+                            "Arrival Airport: "+ ArrAriport +"\n"+
                             "Code: " + code + "\n" +
                             "Status: " + status);
                     Transport transport = session.getTransport("smtp");
