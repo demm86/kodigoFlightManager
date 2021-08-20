@@ -31,9 +31,6 @@ public class Main {
 
     public static List<FlightStatus> flightStatusList = new ArrayList<>();
 
-    public static Sheet sheet = new Sheet();
-
-
     public static AircraftServices aircraftServices = new AircraftServices();
     public static List<Aircraft> aircraftList = new ArrayList<>();
 
@@ -41,7 +38,6 @@ public class Main {
 
     public static void main(String[] args) throws GeneralSecurityException, IOException {
 
-        //sheet.test();
         sb.setLength(0);
         Aircraft aircraft = new Aircraft();
         Flight flightTmp = new Flight();
