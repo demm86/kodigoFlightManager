@@ -1,12 +1,14 @@
 package projectSolid.Service;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Scanner;
-
-import static projectSolid.Main.sb;
 import static projectSolid.Service.MenuActions.*;
 
 public class Menu {
-    public static void main() {
+    public static void main() throws GeneralSecurityException, IOException {
+        StringBuilder sb = new StringBuilder();
+        Sheet sheet = new Sheet();
         int option=0;
         Scanner scanner = new Scanner(System.in);
 
@@ -18,9 +20,10 @@ public class Menu {
             sb.append("1. Add flight\n");
             sb.append("2. Flights list\n");
             sb.append("3. Update flights\n");
-            sb.append("4. Exit\n");
-            sb.append("5. Send Email\n");
-            sb.append("------------------------------------------");
+            sb.append("4. Send Email\n");
+            sb.append("5. Generate excel\n");
+            sb.append("6. Exit\n");
+            sb.append("------------------------------------------\n");
             System.out.println(sb);
 
             option  = Integer.parseInt(scanner.next());
@@ -37,11 +40,15 @@ public class Menu {
                     flightValidation();
                     break;
                 case 4:
+                    sendEmail();
+                    break;
+                case 5:
+                    sheet.createSheet();
+                    break;
+                case 6:
                     System.out.println("Bye-bye");
                     System.exit(0);
                     break;
-                case 5:
-                    sendEmail();
             }
 
         }
