@@ -57,6 +57,10 @@ public class Main {
         flightServices.add(flightTmp,flightList);
         //flightServices.printElements(flightList);
 
+
+
+
+
         Menu.main();
 
 
@@ -78,36 +82,6 @@ public class Main {
 */
 
     }
-
-
-
-
-
-
-
-    public  static void updateFlight(){
-        //clean();
-        Scanner sc = new Scanner(System.in);
-        int op;
-        sb.append("Select an option: \n");
-        sb.append("1. Update Status\n");
-        sb.append("2. Update Time\n");
-        sb.append("3. Return main");
-        System.out.println(sb);
-        op = Integer.parseInt(sc.next());
-        switch (op){
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                //mainP();
-                break;
-
-        }
-
-    }
-
 
 
 }

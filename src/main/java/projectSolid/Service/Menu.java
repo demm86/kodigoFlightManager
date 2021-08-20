@@ -37,7 +37,7 @@ public class Menu {
                     printFlight();
                     break;
                 case 3:
-                    updateFlight();
+                    flightValidation();
                     break;
                 case 4:
                     sendEmail();
