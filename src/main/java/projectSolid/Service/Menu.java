@@ -34,7 +34,7 @@ public class Menu {
                     printFlight();
                     break;
                 case 3:
-                    updateFlight();
+                    flightValidation();
                     break;
                 case 4:
                     System.out.println("Bye-bye");
