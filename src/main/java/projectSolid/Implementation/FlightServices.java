@@ -73,7 +73,7 @@ public class FlightServices implements IFlightServices, IEmail {
         for (Flight flight: list) {
             System.out.println("ID: " + flight.getId() + "\n" +
                     "Code: " + flight.getCode() + "\n" +
-                    "Departure: " + flight.getArrivalAirport() + "\n" +
+                    "Departure: " + flight.getDepartureAirport() + "\n" +
                     "Arrival: " + flight.getArrivalAirport() + "\n" +
                     "Status: " + flight.getFlightStatus().getName()+ "\n" +
                     "Aircraft: " + flight.getAircraft().getModel()+ "\n" +

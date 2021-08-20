@@ -20,25 +20,30 @@ public class MenuActions {
     public static void getFlightInfo() {
 
         Flight flight;
-        Airport airport;
+        //Airport airport;
         Scanner scanner = new Scanner(System.in);
+        scanner.useDelimiter("\n");
         try {
 
             flight = new Flight();
-            airport = new Airport();
+            Airport airport1 = new Airport();
             System.out.println("Type the flight id");
             flight.setId(Integer.parseInt(scanner.next()));
             System.out.println("Type the flight code");
             flight.setCode(scanner.next());
+
             System.out.println("Type the departure airport");
-            airport.setName(scanner.next());
-            flight.setDepartureAirport(airport);
+            airport1.setName(scanner.next());
+            flight.setDepartureAirport(airport1);
+
+            Airport airport2 = new Airport();
             System.out.println("Type departure date");
             flight.setDepartureTime(LocalDateTime.parse(scanner.next()));
 
             System.out.println("Type the arrival airport");
-            airport.setName(scanner.next());
-            flight.setArrivalAirport(airport);
+            airport2.setName(scanner.next());
+            flight.setArrivalAirport(airport2);
+
             System.out.println("Type arrival date");
             flight.setArrivalTime(LocalDateTime.parse(scanner.next()));
 
