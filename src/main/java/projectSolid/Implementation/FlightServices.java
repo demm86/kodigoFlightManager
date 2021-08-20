@@ -6,6 +6,7 @@ import projectSolid.Entities.Flight;
 import projectSolid.Entities.FlightStatus;
 import projectSolid.Interfaces.IEmail;
 import projectSolid.Interfaces.IFlightServices;
+import projectSolid.Main;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -13,15 +14,20 @@ import java.util.List;
 
 public class FlightServices implements IFlightServices, IEmail {
 
-    public boolean flightExists= false;
+    public boolean flightExists;
 
     @Override
     public List<Flight> searchFlightById(int id, List<Flight> list) {
+
         List<Flight> flightFound = new ArrayList<>();
         for(Flight flight: list){
             if(flight.getId() == id){
                 flightFound.add(flight);
                 flightExists=true;
+                //System.out.println(flightExists);
+            }
+            else{
+                flightExists= false;
             }
         }
         return flightFound;
@@ -73,7 +79,7 @@ public class FlightServices implements IFlightServices, IEmail {
         for (Flight flight: list) {
             System.out.println("ID: " + flight.getId() + "\n" +
                     "Code: " + flight.getCode() + "\n" +
-                    "Departure: " + flight.getArrivalAirport() + "\n" +
+                    "Departure: " + flight.getDepartureAirport() + "\n" +
                     "Arrival: " + flight.getArrivalAirport() + "\n" +
                     "Status: " + flight.getFlightStatus().getName()+ "\n" +
                     "Aircraft: " + flight.getAircraft().getModel()+ "\n" +
@@ -84,6 +90,8 @@ public class FlightServices implements IFlightServices, IEmail {
 
         }
     }
+
+
 
     @Override
     public List<Flight> add(Flight flight, List<Flight> list) {
@@ -114,6 +122,7 @@ public class FlightServices implements IFlightServices, IEmail {
 
         return list;
     }
+
 
     @Override
     public void sendEmailFlightDetails(String email, Flight flight) {

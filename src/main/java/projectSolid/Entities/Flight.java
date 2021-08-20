@@ -28,4 +28,11 @@ public class Flight {
     private Airport delayArrivalAirport;
     @Getter @Setter
     private FlightStatus flightStatus;
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                ", departureAirport=" + departureAirport +
+                '}';
+    }
 }
