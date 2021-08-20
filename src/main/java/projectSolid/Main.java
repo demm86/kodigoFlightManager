@@ -50,7 +50,7 @@ public class Main {
         aircraftServices.printElements(aircraftList);
 
         flightStatusList = flightStatusServices.setElements();
-        flightStatusServices.printElements(flightStatusList);
+        //flightStatusServices.printElements(flightStatusList);
 
         flightTmp.setId(1);
         flightTmp.setCode("test");
@@ -59,7 +59,7 @@ public class Main {
 
 
         flightServices.add(flightTmp,flightList);
-        flightServices.printElements(flightList);
+        //flightServices.printElements(flightList);
 
         Menu.main();
 

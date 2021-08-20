@@ -7,6 +7,7 @@ import projectSolid.Entities.FlightStatus;
 import projectSolid.Interfaces.IEmail;
 import projectSolid.Interfaces.IFlightServices;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,8 +75,10 @@ public class FlightServices implements IFlightServices, IEmail {
                     "Code: " + flight.getCode() + "\n" +
                     "Departure: " + flight.getArrivalAirport() + "\n" +
                     "Arrival: " + flight.getArrivalAirport() + "\n" +
-                    "Status: " + flight.getFlightStatus()+ "\n" +
-                    "Aircraft: " + flight.getAircraft().getModel()+ "\n");
+                    "Status: " + flight.getFlightStatus().getName()+ "\n" +
+                    "Aircraft: " + flight.getAircraft().getModel()+ "\n" +
+                    "Departure time: "+flight.getDepartureTime()+"\n" +
+                    "Arrival time: "+flight.getArrivalTime());
             System.out.println("---------------------------------");
             System.out.println();
 
