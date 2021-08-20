@@ -1,5 +1,6 @@
 package projectSolid.Service;
 
+import projectSolid.Entities.Airport;
 import projectSolid.Entities.Flight;
 import projectSolid.Implementation.FlightServices;
 import projectSolid.Main;
@@ -9,6 +10,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.time.LocalDateTime;
 import java.util.Properties;
 import java.util.Scanner;
 import static projectSolid.Main.sb;
@@ -18,13 +20,29 @@ public class MenuActions {
     public static void getFlightInfo() {
 
         Flight flight;
+        Airport airport;
         Scanner scanner = new Scanner(System.in);
         try {
+
             flight = new Flight();
+            airport = new Airport();
             System.out.println("Type the flight id");
             flight.setId(Integer.parseInt(scanner.next()));
             System.out.println("Type the flight code");
             flight.setCode(scanner.next());
+            System.out.println("Type the departure airport");
+            airport.setName(scanner.next());
+            flight.setDepartureAirport(airport);
+            System.out.println("Type departure date");
+            flight.setDepartureTime(LocalDateTime.parse(scanner.next()));
+
+            System.out.println("Type the arrival airport");
+            airport.setName(scanner.next());
+            flight.setArrivalAirport(airport);
+            System.out.println("Type arrival date");
+            flight.setArrivalTime(LocalDateTime.parse(scanner.next()));
+
+
             flight.setAircraft(Main.aircraftList.get(1));
             flight.setFlightStatus(Main.flightStatusList.get(1));
 
@@ -91,7 +109,7 @@ public class MenuActions {
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");
-        //properties.put("mail.smtp.starttls.enable","true");
+        properties.put("mail.smtp.starttls.enable","true");
         properties.put("mail.smtp.user", data.getSender());
         properties.put("mail.smtp.password", data.getPassword());
 
