@@ -4,9 +4,6 @@ import java.util.Scanner;
 
 import static projectSolid.Main.sb;
 import static projectSolid.Service.MenuActions.*;
-import static projectSolid.Service.MenuAcciones.getinfoFlight;
-import static projectSolid.Service.MenuAcciones.printFlight;
-import static projectSolid.Service.MenuAcciones.sendEmail;
 
 public class Menu {
     public static void main() {
