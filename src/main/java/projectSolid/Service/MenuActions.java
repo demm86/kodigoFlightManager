@@ -25,25 +25,30 @@ public class MenuActions {
     public static void getFlightInfo() {
 
         Flight flight;
-        Airport airport;
+        //Airport airport;
         Scanner scanner = new Scanner(System.in);
+        scanner.useDelimiter("\n");
         try {
 
             flight = new Flight();
-            airport = new Airport();
+            Airport airport1 = new Airport();
             System.out.println("Type the flight id");
             flight.setId(Integer.parseInt(scanner.next()));
             System.out.println("Type the flight code");
             flight.setCode(scanner.next());
+
             System.out.println("Type the departure airport");
-            airport.setName(scanner.next());
-            flight.setDepartureAirport(airport);
+            airport1.setName(scanner.next());
+            flight.setDepartureAirport(airport1);
+
+            Airport airport2 = new Airport();
             System.out.println("Type departure date");
             flight.setDepartureTime(LocalDateTime.parse(scanner.next()));
 
             System.out.println("Type the arrival airport");
-            airport.setName(scanner.next());
-            flight.setArrivalAirport(airport);
+            airport2.setName(scanner.next());
+            flight.setArrivalAirport(airport2);
+
             System.out.println("Type arrival date");
             flight.setArrivalTime(LocalDateTime.parse(scanner.next()));
 
@@ -166,6 +171,8 @@ public class MenuActions {
             int id;
             int idVuelo;
             String code;
+            String DepAirport;
+            String ArrAriport;
             String status;
             Scanner sc = new Scanner(System.in);
             message.addRecipients(Message.RecipientType.TO, String.valueOf(new InternetAddress(data.getReceiver())));
@@ -176,10 +183,14 @@ public class MenuActions {
                 if (id == f.getId()) {
                     idVuelo = f.getId();
                     code = f.getCode();
+                    DepAirport = f.getDepartureAirport().getName();
+                    ArrAriport = f.getArrivalAirport().getName();
                     status = f.getFlightStatus().getName();
                     message.setSubject("Esto es una prueba");
                     message.setText("Datos de vuelo: \n" +
                             "ID Flight: " + idVuelo + "\n" +
+                            "Departure Airport: "+ DepAirport +"\n"+
+                            "Arrival Airport: "+ ArrAriport +"\n"+
                             "Code: " + code + "\n" +
                             "Status: " + status);
                     Transport transport = session.getTransport("smtp");
