@@ -34,6 +34,14 @@ public class CountryServices  implements ICountryServices {
 
     @Override
     public void printElements(List<Country> list) {
-        System.out.println("Country list:"+list);
+        StringBuilder sb = new StringBuilder();
+        sb.append("COUNTRY LIST\n");
+        sb.append("------------------------\n");
+        for (Country country : list){
+            sb.append("ID: ").append(country.getId()).append(" |");
+            sb.append("CODE: ").append(country.getCode()).append(" |");
+            sb.append("NAME: ").append(country.getName()).append("\n");
+        }
+        System.out.println(sb);
     }
 }

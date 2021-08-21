@@ -2,14 +2,17 @@ package projectSolid.Implementation;
 
 import projectSolid.Entities.Airline;
 import projectSolid.Entities.Airport;
+import projectSolid.Entities.City;
 import projectSolid.Interfaces.IAirportServices;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AirportServices implements IAirportServices {
     @Override
-    public List<Airport> setAirport() {
-        return null;
+    public List<Airport> setAirport(List<City> list) {
+        List<Airport> airports = new ArrayList<>();
+        return airports;
     }
 
     @Override

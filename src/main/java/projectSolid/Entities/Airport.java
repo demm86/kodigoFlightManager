@@ -15,14 +15,12 @@ public class Airport {
     @Getter @Setter
     private City city;
 
-    public Airport(){
+    public Airport(){}
 
-    }
-
-    public Airport(int id, String code, String name){
-        id = this.id;
-        code = this.code;
-        name = this.name;
-
+    public Airport(int id, String code, String name, City city){
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.city = city;
     }
 }

@@ -9,14 +9,11 @@ public class FlightStatus {
     private String code;
     private String name;
 
+    public FlightStatus(){}
 
     public FlightStatus(int id, String code, String name) {
         this.id =id;
         this.code = code;
         this.name = name;
-    }
-
-    public FlightStatus(){
-
     }
 }

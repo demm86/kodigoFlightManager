@@ -22,6 +22,14 @@ public class FlightStatusServices implements IFlightStatusServices {
 
     @Override
     public void printElements(List<FlightStatus> list) {
-        System.out.println("Flight Status list:"+list);
+        StringBuilder sb = new StringBuilder();
+        sb.append("FLIGHT STATUS LIST\n");
+        sb.append("---------------------------------\n");
+        for(FlightStatus flightStatus : list){
+            sb.append("ID: ").append(flightStatus.getId()).append(" |");
+            sb.append("CODE: ").append(flightStatus.getCode()).append(" |");
+            sb.append("NAME: ").append(flightStatus.getName()).append("\n");
+        }
+        System.out.println(sb);
     }
 }

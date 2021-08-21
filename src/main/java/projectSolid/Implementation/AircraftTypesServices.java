@@ -1,31 +1,27 @@
 package projectSolid.Implementation;
 
-import projectSolid.Entities.Aircraft;
 import projectSolid.Entities.AircraftType;
 import projectSolid.Interfaces.IAircraftTypeServices;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AircraftTypesServices implements IAircraftTypeServices {
     @Override
     public List<AircraftType> setAircraftType() {
-        return null;
+        List<AircraftType> aircraftTypes = new ArrayList<>();
+
+        //setear la lista
+
+        return aircraftTypes;
     }
 
     @Override
     public void printElements(List<AircraftType> list) {
-        System.out.println("Aircraft Type list:");
-        System.out.println("---------------------------------");
+        //Titulo de la lista
         for (AircraftType AircraftType: list) {
-            System.out.println("ID: " + AircraftType.getId() + "\n" +
-                    "Code: " + AircraftType.getCode() + "\n"+
-                    "Name: " + AircraftType.getName() + "\n");
-
-            System.out.println("---------------------------------");
-            System.out.println();
-
+            //Datos de la lista
         }
-
-
+        //Imprimir el objeto de StringBuilder
     }
 }

@@ -2,14 +2,17 @@ package projectSolid.Implementation;
 
 import projectSolid.Entities.Aircraft;
 import projectSolid.Entities.Airline;
+import projectSolid.Entities.Country;
 import projectSolid.Interfaces.IAirlineServices;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AirlineServices implements IAirlineServices {
     @Override
-    public List<Airline> setAirline() {
-        return null;
+    public List<Airline> setAirline(List<Country> list) {
+        List<Airline> airlines = new ArrayList<>();
+        return airlines;
     }
 
     @Override

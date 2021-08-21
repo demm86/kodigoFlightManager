@@ -29,10 +29,5 @@ public class Flight {
     @Getter @Setter
     private FlightStatus flightStatus;
 
-    @Override
-    public String toString() {
-        return "Flight{" +
-                ", departureAirport=" + departureAirport +
-                '}';
-    }
+    public Flight(){}
 }
