@@ -24,7 +24,6 @@ public class FlightServices implements IFlightServices, IEmail {
             if(flight.getId() == id){
                 flightFound.add(flight);
                 flightExists=true;
-                //System.out.println(flightExists);
             }
             else{
                 flightExists= false;
@@ -73,22 +72,22 @@ public class FlightServices implements IFlightServices, IEmail {
 
     @Override
     public void printElements(List<Flight> list) {
-
-        System.out.println("Flight List:");
-        System.out.println("---------------------------------");
+        StringBuilder sb = new StringBuilder();
+        sb.append("FLIGHTS LIST\n");
+        sb.append("-------------------------------------------------\n");
         for (Flight flight: list) {
-            System.out.println("ID: " + flight.getId() + "\n" +
-                    "Code: " + flight.getCode() + "\n" +
-                    "Departure: " + flight.getDepartureAirport() + "\n" +
-                    "Arrival: " + flight.getArrivalAirport() + "\n" +
-                    "Status: " + flight.getFlightStatus().getName()+ "\n" +
-                    "Aircraft: " + flight.getAircraft().getModel()+ "\n" +
-                    "Departure time: "+flight.getDepartureTime()+"\n" +
-                    "Arrival time: "+flight.getArrivalTime());
-            System.out.println("---------------------------------");
-            System.out.println();
-
+            sb.append("ID: ").append(flight.getId()).append("\n");
+            sb.append("CODE: ").append(flight.getCode()).append("\n");
+            sb.append("DEPARTURE AIRPORT: ").append(flight.getDepartureAirport().getName()).append("\n");
+            sb.append("DEPARTURE TIME: ").append(flight.getDepartureTime()).append("\n");
+            sb.append("ARRIVAL AIRPORT: ").append(flight.getArrivalAirport().getName()).append("\n");
+            sb.append("ARRIVAL TIME: ").append(flight.getArrivalTime()).append("\n");
+            sb.append("DELAY DEPARTURE TIME: ").append(flight.getDelayDepartureTime()).append("\n");
+            sb.append("DELAY ARRIVAL TIME: ").append(flight.getDelayArrivalTime()).append("\n");
+            sb.append("AIRCRAFT: ").append(flight.getAircraft().getModel()).append("\n");
+            sb.append("FLIGHT STATUS: ").append(flight.getFlightStatus().getName()).append("\n");
         }
+        System.out.println(sb);
     }
 
 
@@ -102,7 +101,6 @@ public class FlightServices implements IFlightServices, IEmail {
         if( indexTmp == -1) {
             list.add(flight);
         }
-
 
         return list ;
     }

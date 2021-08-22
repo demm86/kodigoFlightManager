@@ -6,8 +6,10 @@ public class Menu {
 
     public void shoMenu() {
         StringBuilder sb = new StringBuilder();
-        int option=0;
         Scanner scanner = new Scanner(System.in);
+        MenuActions menuActions = new MenuActions();
+
+        int option=0;
 
         while (option!=6){
             sb.setLength(0);
@@ -28,10 +30,10 @@ public class Menu {
             switch (option){
 
                 case 1:
-                    System.out.println("AddFlight");
+                    menuActions.addFlight();
                     break;
                 case 2:
-                    System.out.println("ShowFlights");
+                    menuActions.showFlights();
                     break;
                 case 3:
                     System.out.println("UpdateFlight");

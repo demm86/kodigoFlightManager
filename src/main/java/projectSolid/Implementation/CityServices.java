@@ -48,7 +48,7 @@ public class CityServices implements ICityServices {
             sb.append("ID: ").append(city.getId()).append(" |");
             sb.append("CODE: ").append(city.getCode()).append(" |");
             sb.append("NAME: ").append(city.getName()).append(" |");
-            sb.append("COUNTRY").append(city.getCountry().getName()).append("\n");
+            sb.append("COUNTRY: ").append(city.getCountry().getName()).append("\n");
         }
         System.out.println(sb);
     }

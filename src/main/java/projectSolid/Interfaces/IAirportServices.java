@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface IAirportServices {
     List<Airport> setAirport(List<City> list);
+    Airport getAirport(int idAirport, List<Airport> list);
     void printElements(List<Airport> list);
 
 }

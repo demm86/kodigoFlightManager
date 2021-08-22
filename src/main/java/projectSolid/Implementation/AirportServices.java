@@ -28,15 +28,26 @@ public class AirportServices implements IAirportServices {
     }
 
     @Override
+    public Airport getAirport(int idAirport, List<Airport> list) {
+        Airport airport = new Airport();
+        for(Airport a : list){
+            if(a.getId() == idAirport){
+                airport = a;
+            }
+        }
+        return airport;
+    }
+
+    @Override
     public void printElements(List<Airport> list) {
         StringBuilder sb = new StringBuilder();
         sb.append("AIRPORT LIST\n");
         sb.append("-----------------------------------------------\n");
         for (Airport airport: list) {
-            sb.append("ID").append(airport.getId()).append(" |");
-            sb.append("CODE").append(airport.getCode()).append(" |");
-            sb.append("NAME").append(airport.getName()).append(" |");
-            sb.append("CITY").append(airport.getCity().getName()).append("\n");
+            sb.append("ID: ").append(airport.getId()).append(" |");
+            sb.append("CODE: ").append(airport.getCode()).append(" |");
+            sb.append("NAME: ").append(airport.getName()).append(" |");
+            sb.append("CITY: ").append(airport.getCity().getName()).append("\n");
         }
         System.out.println(sb);
     }

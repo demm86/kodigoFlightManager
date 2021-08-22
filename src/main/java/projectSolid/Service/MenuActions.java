@@ -1,69 +1,90 @@
 package projectSolid.Service;
 
-import projectSolid.Entities.Flight;
-import projectSolid.Main;
+import projectSolid.Entities.*;
+import projectSolid.Implementation.*;
 
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.Properties;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuActions {
 
-    /*public static void sendEmail() {
-        EmailData data = new EmailData();
+    Scanner scanner = new Scanner(System.in);
+    StringBuilder sb = new StringBuilder();
 
-        Properties properties = new Properties();
+    CountryServices countryServices = new CountryServices();
+    List<Country> countries;
 
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "25");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable","true");
-        properties.put("mail.smtp.user", data.getSender());
-        properties.put("mail.smtp.password", data.getPassword());
+    CityServices cityServices = new CityServices();
+    List<City> cities;
 
-        Session session = Session.getDefaultInstance(properties);
-        MimeMessage message = new MimeMessage(session);
+    AircraftTypesServices aircraftTypesServices = new AircraftTypesServices();
+    List<AircraftType> aircraftTypes;
 
-        try {
-            int id;
-            int idVuelo;
-            String code;
-            String DepAirport;
-            String ArrAriport;
-            String status;
-            Scanner sc = new Scanner(System.in);
-            message.addRecipients(Message.RecipientType.TO, String.valueOf(new InternetAddress(data.getReceiver())));
-            //printFlight();
-            System.out.println("type the iD Flight");
-            id = Integer.parseInt(sc.next());
-            for (Flight f : flightList) {
-                if (id == f.getId()) {
-                    idVuelo = f.getId();
-                    code = f.getCode();
-                    DepAirport = f.getDepartureAirport().getName();
-                    ArrAriport = f.getArrivalAirport().getName();
-                    status = f.getFlightStatus().getName();
-                    message.setSubject("Esto es una prueba");
-                    message.setText("Datos de vuelo: \n" +
-                            "ID Flight: " + idVuelo + "\n" +
-                            "Departure Airport: "+ DepAirport +"\n"+
-                            "Arrival Airport: "+ ArrAriport +"\n"+
-                            "Code: " + code + "\n" +
-                            "Status: " + status);
-                    Transport transport = session.getTransport("smtp");
-                    transport.connect("smtp.gmail.com", data.getSender(), data.getPassword());
-                    transport.sendMessage(message, message.getAllRecipients());
-                    transport.close();
-                    System.out.println("Email sent");
-                }
-            }
+    FlightStatusServices flightStatusServices = new FlightStatusServices();
+    List<FlightStatus> flightStatuses;
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }*/
+    AirlineServices airlineServices = new AirlineServices();
+    List<Airline> airlines;
+
+    AirportServices airportServices = new AirportServices();
+    List<Airport> airports;
+
+    AircraftServices aircraftServices = new AircraftServices();
+    List<Aircraft> aircrafts;
+
+    Flight flight = new Flight();
+    FlightServices flightServices = new FlightServices();
+    List<Flight> flights = new ArrayList<>();
+
+    public void showFlights(){
+        flightServices.printElements(flights);
+    }
+
+    public void addFlight(){
+        countries = countryServices.setElements();
+        cities = cityServices.setElements(countries);
+        aircraftTypes = aircraftTypesServices.setAircraftType();
+        flightStatuses = flightStatusServices.setElements();
+        airlines = airlineServices.setAirline(countries);
+        airports = airportServices.setAirport(cities);
+        aircrafts = aircraftServices.setElements(airlines,aircraftTypes);
+
+        sb.append("Type flight information\n");
+        sb.append("----------------------------------------------\n");
+        System.out.println(sb);
+
+        System.out.println("Type flight id: ");
+
+        flight.setId(Integer.parseInt(scanner.next()));
+
+        System.out.println("Type flight code: ");
+        flight.setCode(scanner.next());
+
+        airportServices.printElements(airports);
+        System.out.println("Departure Airport: ");
+        flight.setDepartureAirport(airportServices.getAirport(Integer.parseInt(scanner.next()), airports));
+
+        System.out.println("Arrival Airport: ");
+        flight.setArrivalAirport(airportServices.getAirport(Integer.parseInt(scanner.next()), airports));
+
+        System.out.println("Departure time: (Type format as the example: 2021-12-31T00:00)");
+        flight.setDepartureTime(LocalDateTime.parse(scanner.next()));
+
+        System.out.println("Arrival time: (Type format as the example: 2021-12-31T00:00)");
+        flight.setArrivalTime(LocalDateTime.parse(scanner.next()));
+
+        aircraftServices.printElements(aircrafts);
+        System.out.println("Assign aircraft to flight: ");
+        flight.setAircraft(aircraftServices.getAircraft(Integer.parseInt(scanner.next()), aircrafts));
+
+        flight.setFlightStatus(flightStatusServices.getFlightStatus(2, flightStatuses));
+
+        flightServices.add(flight, flights);
+
+        System.out.println("Flight added successfully");
+    }
+
+    public void updateFlight(){}
 }
