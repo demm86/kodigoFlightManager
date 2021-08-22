@@ -16,6 +16,18 @@ public class AircraftServices implements IAircraftServices {
 
     @Override
     public void printElements(List<Aircraft> list) {
-
+        StringBuilder sb = new StringBuilder();
+        sb.append("AIRCRAFT LIST\n");
+        sb.append("-----------------------------------------------\n");
+        for(Aircraft aircraft : list){
+            sb.append("ID: ").append(aircraft.getId()).append(" |");
+            sb.append("MODEL: ").append(aircraft.getModel()).append(" |");
+            sb.append("PASSENGER CAPACITY: ").append(aircraft.getPassengerCapacity()).append(" |");
+            sb.append("RANGE: ").append(aircraft.getRange()).append(" |");
+            sb.append("TANK CAPACITY: ").append(aircraft.getTankCapacity()).append(" |");
+            sb.append("AIRLINE").append(aircraft.getAirline().getName()).append(" |");
+            sb.append("AIRCRAFT TYPE").append(aircraft.getAircraftType().getName()).append("\n");
+        }
+        System.out.println(sb);
     }
 }
