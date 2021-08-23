@@ -17,12 +17,12 @@ public class FlightServices implements IFlightServices, IEmail {
     public boolean flightExists;
 
     @Override
-    public List<Flight> searchFlightById(int id, List<Flight> list) {
+    public Flight searchFlightById(int id, List<Flight> list) {
 
-        List<Flight> flightFound = new ArrayList<>();
+        Flight flightFound = new Flight();
         for(Flight flight: list){
             if(flight.getId() == id){
-                flightFound.add(flight);
+                flightFound = flight;
                 flightExists=true;
             }
             else{
@@ -71,20 +71,33 @@ public class FlightServices implements IFlightServices, IEmail {
     }
 
     @Override
+    public void printFlight(Flight flight) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECTED FLIGHT\n");
+        sb.append("-----------------------------------------------------\n");
+
+        sb.append("ID: ").append(flight.getId()).append("\n");
+        sb.append("CODE: ").append(flight.getCode()).append("\n");
+        sb.append("DEPARTURE AIRPORT: ").append(flight.getDepartureAirport().getName()).append("\n");
+        sb.append("DEPARTURE TIME: ").append(flight.getDepartureTime()).append("\n");
+        sb.append("ARRIVAL AIRPORT: ").append(flight.getArrivalAirport().getName()).append("\n");
+        sb.append("ARRIVAL TIME: ").append(flight.getArrivalTime()).append("\n");
+        sb.append("DELAY DEPARTURE TIME: ").append(flight.getDelayDepartureTime()).append("\n");
+        sb.append("DELAY ARRIVAL TIME: ").append(flight.getDelayArrivalTime()).append("\n");
+        sb.append("AIRCRAFT: ").append(flight.getAircraft().getModel()).append("\n");
+        sb.append("FLIGHT STATUS: ").append(flight.getFlightStatus().getName()).append("\n");
+
+        System.out.println(sb);
+    }
+
+    @Override
     public void printElements(List<Flight> list) {
         StringBuilder sb = new StringBuilder();
         sb.append("FLIGHTS LIST\n");
         sb.append("-------------------------------------------------\n");
         for (Flight flight: list) {
-            sb.append("ID: ").append(flight.getId()).append("\n");
-            sb.append("CODE: ").append(flight.getCode()).append("\n");
-            sb.append("DEPARTURE AIRPORT: ").append(flight.getDepartureAirport().getName()).append("\n");
-            sb.append("DEPARTURE TIME: ").append(flight.getDepartureTime()).append("\n");
-            sb.append("ARRIVAL AIRPORT: ").append(flight.getArrivalAirport().getName()).append("\n");
-            sb.append("ARRIVAL TIME: ").append(flight.getArrivalTime()).append("\n");
-            sb.append("DELAY DEPARTURE TIME: ").append(flight.getDelayDepartureTime()).append("\n");
-            sb.append("DELAY ARRIVAL TIME: ").append(flight.getDelayArrivalTime()).append("\n");
-            sb.append("AIRCRAFT: ").append(flight.getAircraft().getModel()).append("\n");
+            sb.append("ID: ").append(flight.getId()).append(" |");
+            sb.append("CODE: ").append(flight.getCode()).append(" |");
             sb.append("FLIGHT STATUS: ").append(flight.getFlightStatus().getName()).append("\n");
         }
         System.out.println(sb);
@@ -107,7 +120,7 @@ public class FlightServices implements IFlightServices, IEmail {
 
     @Override
     public List<Flight> changeStatus(FlightStatus status,Flight flight, List<Flight> list) {
-        Flight flightTmp = new Flight();
+        Flight flightTmp;
 
         int indexTmp;
         indexTmp = list.indexOf(flight);

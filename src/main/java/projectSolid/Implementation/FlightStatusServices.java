@@ -16,7 +16,7 @@ public class FlightStatusServices implements IFlightStatusServices {
         flightStatus.add(new FlightStatus(1, "PRK", "Parked"));
         flightStatus.add(new FlightStatus(2, "ONT", "On Time"));
         flightStatus.add(new FlightStatus(3, "DLY", "Delayed"));
-        flightStatus.add(new FlightStatus(3, "CND", "Canceled"));
+        flightStatus.add(new FlightStatus(4, "CND", "Canceled"));
 
         return flightStatus;
     }

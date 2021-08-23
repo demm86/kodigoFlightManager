@@ -36,7 +36,7 @@ public class Menu {
                     menuActions.showFlights();
                     break;
                 case 3:
-                    System.out.println("UpdateFlight");
+                    menuActions.updateFlight();
                     break;
                 case 4:
                     System.out.println("Send Email");

@@ -79,12 +79,47 @@ public class MenuActions {
         System.out.println("Assign aircraft to flight: ");
         flight.setAircraft(aircraftServices.getAircraft(Integer.parseInt(scanner.next()), aircrafts));
 
-        flight.setFlightStatus(flightStatusServices.getFlightStatus(2, flightStatuses));
+        flight.setFlightStatus(flightStatusServices.getFlightStatus(1, flightStatuses));
 
         flightServices.add(flight, flights);
 
         System.out.println("Flight added successfully");
     }
 
-    public void updateFlight(){}
+    public void updateFlight(){
+        System.out.println("Select flight to updated");
+        flightServices.printElements(flights);
+        Flight selectedFlight = flightServices.searchFlightById(Integer.parseInt(scanner.next()), flights);
+        flightServices.printFlight(selectedFlight);
+
+        System.out.println("Select new status: ");
+        flightStatuses = flightStatusServices.setElements();
+        flightStatusServices.printElements(flightStatuses);
+
+        int status = Integer.parseInt(scanner.next());
+        if(status == 2 || status == 4){
+            FlightStatus selectedFlightStatus =  flightStatusServices.getFlightStatus(status, flightStatuses);
+            flightServices.changeStatus(selectedFlightStatus, selectedFlight, flights);
+            System.out.println("Status updated successfully");
+        }else if(status == 3){
+            StringBuilder sb = new StringBuilder();
+            sb.append("What is delayed? Departure or Arrival time: \n");
+            sb.append("1. Departure time\n").append("2. Arrival time\n");
+            System.out.println(sb);
+            int selectedOption = Integer.parseInt(scanner.next());
+            switch(selectedOption){
+                case 1:
+                    System.out.println("Departure time updated successfully");
+                    break;
+                case 2:
+                    System.out.println("Arrival time updated successfully");
+                    break;
+                default:
+                    System.out.println("Option incorrect");
+                    break;
+            }
+        }else{
+            System.out.println("Status incorrect");
+        }
+    }
 }
