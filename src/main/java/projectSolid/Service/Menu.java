@@ -11,7 +11,7 @@ public class Menu {
 
         int option=0;
 
-        while (option!=6){
+        while (option!=7){
             sb.setLength(0);
             sb.append("-----------------------------------------\n");
             sb.append("FLIGHTS MANAGER\n");
@@ -19,9 +19,10 @@ public class Menu {
             sb.append("1. Add flight\n");
             sb.append("2. Flights list\n");
             sb.append("3. Update flights\n");
-            sb.append("4. Send Email\n");
-            sb.append("5. Generate excel\n");
-            sb.append("6. Exit\n");
+            sb.append("4. Search flight\n");
+            sb.append("5. Send Email\n");
+            sb.append("6. Generate excel\n");
+            sb.append("7. Exit\n");
             sb.append("------------------------------------------\n");
             System.out.println(sb);
 
@@ -39,12 +40,15 @@ public class Menu {
                     menuActions.updateFlight();
                     break;
                 case 4:
-                    System.out.println("Send Email");
+                    menuActions.searchFlight();
                     break;
                 case 5:
-                    System.out.println("Generate Excel");
+                    System.out.println("Send Email");
                     break;
                 case 6:
+                    System.out.println("Generate Excel");
+                    break;
+                case 7:
                     System.out.println("Bye-bye");
                     System.exit(0);
                     break;

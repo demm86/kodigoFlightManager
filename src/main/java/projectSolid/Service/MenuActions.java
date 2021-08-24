@@ -34,8 +34,9 @@ public class MenuActions {
     AircraftServices aircraftServices = new AircraftServices();
     List<Aircraft> aircrafts;
 
-    Flight flight = new Flight();
+    Flight flight;
     FlightServices flightServices = new FlightServices();
+
     List<Flight> flights = new ArrayList<>();
 
     public void showFlights(){
@@ -43,6 +44,8 @@ public class MenuActions {
     }
 
     public void addFlight(){
+        flight = new Flight();
+
         countries = countryServices.setElements();
         cities = cityServices.setElements(countries);
         aircraftTypes = aircraftTypesServices.setAircraftType();
@@ -51,6 +54,7 @@ public class MenuActions {
         airports = airportServices.setAirport(cities);
         aircrafts = aircraftServices.setElements(airlines,aircraftTypes);
 
+        sb.setLength(0);
         sb.append("Type flight information\n");
         sb.append("----------------------------------------------\n");
         System.out.println(sb);
@@ -120,6 +124,83 @@ public class MenuActions {
             }
         }else{
             System.out.println("Status incorrect");
+        }
+    }
+
+    public void searchFlight(){
+        countries = countryServices.setElements();
+        cities = cityServices.setElements(countries);
+        airports = airportServices.setAirport(cities);
+
+        int id;
+        boolean flag = true;
+
+        Airport airport;
+
+        int selectedOption = 0;
+        while(selectedOption < 4){
+            sb.setLength(0);
+            sb.append("Search flight by: \n");
+            sb.append("1. Status\n");
+            sb.append("2. Departure airport\n");
+            sb.append("3. Arrival airport\n");
+            sb.append("4. Main menu\n");
+            System.out.println(sb);
+            selectedOption = Integer.parseInt(scanner.next());
+            switch(selectedOption){
+                case 1:
+                    System.out.println("Select status: \n");
+                    flightStatuses = flightStatusServices.setElements();
+                    flightStatusServices.printElements(flightStatuses);
+                    do {
+                        id = Integer.parseInt(scanner.next());
+                        if(id < 0 || id > flightStatuses.size()){
+                            System.out.println("Option incorrect. Please enter the correct number: ");
+                        }else{
+                            flag = false;
+                        }
+                    }while(flag);
+                    FlightStatus flightStatus = flightStatusServices.getFlightStatus(id, flightStatuses);
+
+                    List<Flight> flightsByStatus = flightServices.listByStatus(flightStatus, flights);
+
+                    flightServices.printElements(flightsByStatus);
+                    break;
+                case 2:
+                    System.out.println("Select departure Airport: \n");
+                    airportServices.printElements(airports);
+                    do {
+                        id = Integer.parseInt(scanner.next());
+                        if(id < 0 || id > airports.size()){
+                            System.out.println("Option incorrect. Please enter the correct number: ");
+                        }else{
+                            flag = false;
+                        }
+                    }while(flag);
+                    airport = airportServices.getAirport(id, airports);
+
+                    List<Flight> flightsByDepartureAirport = flightServices.listByDepartureAirport(airport, flights);
+
+                    flightServices.printElements(flightsByDepartureAirport);
+                    break;
+                case 3:
+                    System.out.println("Select arrival Airport: \n");
+                    airportServices.printElements(airports);
+                    do {
+                        id = Integer.parseInt(scanner.next());
+                        if(id < 0 || id > airports.size()){
+                            System.out.println("Option incorrect. Please enter the correct number: ");
+                        }else{
+                            flag = false;
+                        }
+                    }while(flag);
+                    airport = airportServices.getAirport(id, airports);
+
+                    List<Flight> flightsByArrivalAirport = flightServices.listByArrivalAirport(airport, flights);
+
+                    flightServices.printElements(flightsByArrivalAirport);
+                    break;
+            }
         }
     }
 }
