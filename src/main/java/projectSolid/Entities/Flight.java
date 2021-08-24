@@ -11,8 +11,6 @@ public class Flight {
     @Getter @Setter
     private String code;
     @Getter @Setter
-    private Aircraft aircraft;
-    @Getter @Setter
     private Airport departureAirport;
     @Getter @Setter
     private Airport arrivalAirport;
@@ -27,5 +25,9 @@ public class Flight {
     @Getter @Setter
     private Airport delayArrivalAirport;
     @Getter @Setter
+    private Aircraft aircraft;
+    @Getter @Setter
     private FlightStatus flightStatus;
+
+    public Flight(){}
 }
