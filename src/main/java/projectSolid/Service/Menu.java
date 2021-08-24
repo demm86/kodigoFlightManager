@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Menu {
 
+
     public void shoMenu() {
         StringBuilder sb = new StringBuilder();
         Scanner scanner = new Scanner(System.in);
