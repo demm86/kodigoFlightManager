@@ -153,11 +153,18 @@ public class MenuActions {
             sb.append("1. Departure time\n").append("2. Arrival time\n");
             System.out.println(sb);
             int selectedOption = Integer.parseInt(scanner.next());
+
+            FlightStatus selectedFlightStatus;
+
             switch(selectedOption){
                 case 1:
+                    selectedFlightStatus = flightStatusServices.getFlightStatus(status,flightStatuses);
+                    flightServices.changeStatus(selectedFlightStatus, selectedFlight, flights);
                     System.out.println("Departure time updated successfully");
                     break;
                 case 2:
+                    selectedFlightStatus=flightStatusServices.getFlightStatus(status,flightStatuses);
+                    flightServices.changeStatus(selectedFlightStatus, selectedFlight, flights);
                     System.out.println("Arrival time updated successfully");
                     break;
                 default:
