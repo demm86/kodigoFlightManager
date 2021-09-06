@@ -3,7 +3,8 @@ package projectSolid.Service;
 import projectSolid.Entities.*;
 import projectSolid.Implementation.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -34,8 +35,9 @@ public class MenuActions {
     AircraftServices aircraftServices = new AircraftServices();
     List<Aircraft> aircrafts;
 
-    Flight flight = new Flight();
+    Flight flight;
     FlightServices flightServices = new FlightServices();
+
     List<Flight> flights = new ArrayList<>();
 
     public void showFlights(){
@@ -43,6 +45,8 @@ public class MenuActions {
     }
 
     public void addFlight(){
+        flight = new Flight();
+
         countries = countryServices.setElements();
         cities = cityServices.setElements(countries);
         aircraftTypes = aircraftTypesServices.setAircraftType();
@@ -51,9 +55,16 @@ public class MenuActions {
         airports = airportServices.setAirport(cities);
         aircrafts = aircraftServices.setElements(airlines,aircraftTypes);
 
+        sb.setLength(0);
+        Airport selectedAirport;
+        Aircraft selectedAircraft;
+
+        sb.setLength(0);
         sb.append("Type flight information\n");
         sb.append("----------------------------------------------\n");
         System.out.println(sb);
+
+        try{
 
         System.out.println("Type flight id: ");
 
@@ -62,28 +73,66 @@ public class MenuActions {
         System.out.println("Type flight code: ");
         flight.setCode(scanner.next());
 
-        airportServices.printElements(airports);
-        System.out.println("Departure Airport: ");
-        flight.setDepartureAirport(airportServices.getAirport(Integer.parseInt(scanner.next()), airports));
+        do {
+            airportServices.printElements(airports);
+            System.out.println("Departure Airport: ");
+            int selectedAirportId=Integer.parseInt(scanner.next());
+            selectedAirport =airportServices.getAirport(selectedAirportId, airports);
 
-        System.out.println("Arrival Airport: ");
-        flight.setArrivalAirport(airportServices.getAirport(Integer.parseInt(scanner.next()), airports));
+            flight.setDepartureAirport(selectedAirport);
+            if(selectedAirport.getCode()==null){
+                System.out.println("Airport not authorized, please enter an airport ID from the list below.");
+            }
+        } while(selectedAirport.getCode()==null);
 
-        System.out.println("Departure time: (Type format as the example: 2021-12-31T00:00)");
-        flight.setDepartureTime(LocalDateTime.parse(scanner.next()));
 
-        System.out.println("Arrival time: (Type format as the example: 2021-12-31T00:00)");
-        flight.setArrivalTime(LocalDateTime.parse(scanner.next()));
+        do{
+            airportServices.printElements(airports);
+            System.out.println("Arrival Airport: ");
+            int selectedAirportId=Integer.parseInt(scanner.next());
+            selectedAirport =airportServices.getAirport(selectedAirportId, airports);
 
-        aircraftServices.printElements(aircrafts);
-        System.out.println("Assign aircraft to flight: ");
-        flight.setAircraft(aircraftServices.getAircraft(Integer.parseInt(scanner.next()), aircrafts));
+            flight.setArrivalAirport(selectedAirport);
+            if(selectedAirport.getCode()==null){
+                System.out.println("Airport not authorized, please enter an airport ID from the list below.");
+            }
+        }while(selectedAirport.getCode()==null);
+
+        System.out.println("Departure date: (Type format as the example: 2021-12-31)");
+        flight.setDepartureDate(LocalDate.parse(scanner.next()));
+
+        System.out.println("Departure time: (Type format as the example: 12:43)");
+        flight.setDepartureTime(LocalTime.parse(scanner.next()));
+
+        System.out.println("Arrival Date: (Type format as the example: 2021-12-31)");
+        flight.setArrivalDate(LocalDate.parse(scanner.next()));
+
+        System.out.println("Arrival time: (Type format as the example: 12:43)");
+        flight.setArrivalTime(LocalTime.parse(scanner.next()));
+
+        do{
+            aircraftServices.printElements(aircrafts);
+            System.out.println("Assign aircraft to flight: ");
+            int selectedAircraftId=Integer.parseInt(scanner.next());
+            selectedAircraft = aircraftServices.getAircraft(selectedAircraftId, aircrafts);
+
+            flight.setAircraft(selectedAircraft);
+
+            if(selectedAircraft.getModel()==null){
+                System.out.println("Aircraft not authorized, please enter an aircraft ID from the list below.");
+            }
+        }while(selectedAircraft.getModel()==null);
 
         flight.setFlightStatus(flightStatusServices.getFlightStatus(1, flightStatuses));
 
         flightServices.add(flight, flights);
 
         System.out.println("Flight added successfully");
+        }
+        catch(Exception e){
+            System.out.println("Error adding flight, please review your inputs and try again, if the issue persists please contact your systems administrator.");
+            System.out.println("Error code: " + e);
+        }
     }
 
     public void updateFlight(){
@@ -107,11 +156,18 @@ public class MenuActions {
             sb.append("1. Departure time\n").append("2. Arrival time\n");
             System.out.println(sb);
             int selectedOption = Integer.parseInt(scanner.next());
+
+            FlightStatus selectedFlightStatus;
+
             switch(selectedOption){
                 case 1:
+                    selectedFlightStatus = flightStatusServices.getFlightStatus(status,flightStatuses);
+                    flightServices.changeStatus(selectedFlightStatus, selectedFlight, flights);
                     System.out.println("Departure time updated successfully");
                     break;
                 case 2:
+                    selectedFlightStatus=flightStatusServices.getFlightStatus(status,flightStatuses);
+                    flightServices.changeStatus(selectedFlightStatus, selectedFlight, flights);
                     System.out.println("Arrival time updated successfully");
                     break;
                 default:
@@ -120,6 +176,83 @@ public class MenuActions {
             }
         }else{
             System.out.println("Status incorrect");
+        }
+    }
+
+    public void searchFlight(){
+        countries = countryServices.setElements();
+        cities = cityServices.setElements(countries);
+        airports = airportServices.setAirport(cities);
+
+        int id;
+        boolean flag = true;
+
+        Airport airport;
+
+        int selectedOption = 0;
+        while(selectedOption < 4){
+            sb.setLength(0);
+            sb.append("Search flight by: \n");
+            sb.append("1. Status\n");
+            sb.append("2. Departure airport\n");
+            sb.append("3. Arrival airport\n");
+            sb.append("4. Main menu\n");
+            System.out.println(sb);
+            selectedOption = Integer.parseInt(scanner.next());
+            switch(selectedOption){
+                case 1:
+                    System.out.println("Select status: \n");
+                    flightStatuses = flightStatusServices.setElements();
+                    flightStatusServices.printElements(flightStatuses);
+                    do {
+                        id = Integer.parseInt(scanner.next());
+                        if(id < 0 || id > flightStatuses.size()){
+                            System.out.println("Option incorrect. Please enter the correct number: ");
+                        }else{
+                            flag = false;
+                        }
+                    }while(flag);
+                    FlightStatus flightStatus = flightStatusServices.getFlightStatus(id, flightStatuses);
+
+                    List<Flight> flightsByStatus = flightServices.listByStatus(flightStatus, flights);
+
+                    flightServices.printElements(flightsByStatus);
+                    break;
+                case 2:
+                    System.out.println("Select departure Airport: \n");
+                    airportServices.printElements(airports);
+                    do {
+                        id = Integer.parseInt(scanner.next());
+                        if(id < 0 || id > airports.size()){
+                            System.out.println("Option incorrect. Please enter the correct number: ");
+                        }else{
+                            flag = false;
+                        }
+                    }while(flag);
+                    airport = airportServices.getAirport(id, airports);
+
+                    List<Flight> flightsByDepartureAirport = flightServices.listByDepartureAirport(airport, flights);
+
+                    flightServices.printElements(flightsByDepartureAirport);
+                    break;
+                case 3:
+                    System.out.println("Select arrival Airport: \n");
+                    airportServices.printElements(airports);
+                    do {
+                        id = Integer.parseInt(scanner.next());
+                        if(id < 0 || id > airports.size()){
+                            System.out.println("Option incorrect. Please enter the correct number: ");
+                        }else{
+                            flag = false;
+                        }
+                    }while(flag);
+                    airport = airportServices.getAirport(id, airports);
+
+                    List<Flight> flightsByArrivalAirport = flightServices.listByArrivalAirport(airport, flights);
+
+                    flightServices.printElements(flightsByArrivalAirport);
+                    break;
+            }
         }
     }
 }
