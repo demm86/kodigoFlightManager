@@ -15,3 +15,9 @@ t
 Dsrc/main/java/projectSolid/Implementation/AircraftTypesServices.java,a\b\abf0edabdfb2d61bc4a4422251ba928df64e1ae8
 o
 ?src/main/java/projectSolid/Implementation/AircraftServices.java,6\0\6071732dfd163195e13ab7b3d0c0a813aa3f9876
+T
+$src/main/java/projectSolid/Main.java,1\5\1580bcb7ddc64c5041a505bfab3d80074644ac40
+`
+0src/main/java/projectSolid/Entities/Airport.java,0\b\0bfd74c1bb2bc98cfb065a74f9a8f7ba14e3b2f5
+e
+5src/main/java/projectSolid/Entities/FlightStatus.java,9\1\9131ce38169347ec79973ff31da70074a04346fb

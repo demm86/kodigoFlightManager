@@ -180,17 +180,37 @@ public class MenuActions {
                     break;
                 case 2:
                     int option2;
+                    int arrivalAirport;
+                    Airport newArrivalAirport;
                     System.out.println("Would the flight still arrive the same date: \n");
                     System.out.println("1. Yes \n2. No");
                     option2 = scanner.nextInt();
                     if(option2==1){
                         System.out.println("Please enter the new arrival time: (Type format as the example: 12:43)");
                         flight.setDelayArrivalTime(LocalTime.parse(scanner.next()));
+                        System.out.println("Do you have to change the arrival airport: \n");
+                        System.out.println("1: Yes \n2. No");
+                        arrivalAirport = scanner.nextInt();
+                        if(arrivalAirport==1){
+                            airportServices.printElements(airports);
+                            System.out.println("Please select the new arrival airport: ");
+                            int newAirportId=Integer.parseInt(scanner.next());
+                            newArrivalAirport =airportServices.getAirport(newAirportId, airports);
+                        }
                     }else {
                         System.out.println("Please enter the new arrival date: (Type format as the example: 2021-12-31)");
                         flight.setDelayArrivalDate(LocalDate.parse(scanner.next()));
                         System.out.println("Please enter the new arrival time: (Type format as the example: 12:43)");
                         flight.setDelayArrivalTime(LocalTime.parse(scanner.next()));
+                        System.out.println("Do you have to change the arrival airport: \n");
+                        System.out.println("1: Yes \n2. No");
+                        arrivalAirport = scanner.nextInt();
+                        if(arrivalAirport==1){
+                            airportServices.printElements(airports);
+                            System.out.println("Please select the new arrival airport: ");
+                            int newAirportId=Integer.parseInt(scanner.next());
+                            newArrivalAirport =airportServices.getAirport(newAirportId, airports);
+                        }
                     }
                     selectedFlightStatus=flightStatusServices.getFlightStatus(status,flightStatuses);
                     flightServices.changeStatus(selectedFlightStatus, selectedFlight, flights);
