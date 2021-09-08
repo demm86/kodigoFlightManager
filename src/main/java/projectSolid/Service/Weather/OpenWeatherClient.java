@@ -8,16 +8,18 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.*;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 public class OpenWeatherClient {
 
     static private final String APPID_HEADER = "ed361389e17f99360dcc1b0e19b7ca0";
     private String baseOwmUrl = "http://api.openweathermap.org/data/2.5/";
     private String owmAPPID = null;
-
     private HttpClient httpClient;
 
     public OpenWeatherClient () {
@@ -30,14 +32,12 @@ public class OpenWeatherClient {
         this.httpClient = httpClient;
     }
 
-    /** Get the weather forecast for a city
-     * @param cityName is the Name of the city
-     * @return the WeatherForecasteResponse received
-     * @throws JSONException if the response from the OWM server can't be parsed
-     * @throws IOException if there's some network error or the OWM server replies with a error. */
     public WeatherForecastResponse forecastWeatherAtCity (String cityName) throws JSONException, IOException {
-        String subUrl = String.format (Locale.ROOT, "forecast/city?q=%s&type=json&units=metric", cityName);
+
+        String tmpCityName = URLEncoder.encode(cityName, StandardCharsets.UTF_8.name());
+        String subUrl = String.format (Locale.ROOT, "weather?q=%s&APPID=ced361389e17f99360dcc1b0e19b7ca0&units=metric", tmpCityName);
         JSONObject response = doQuery (subUrl);
+
         return new WeatherForecastResponse (response);
     }
 
