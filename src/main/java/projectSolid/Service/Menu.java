@@ -47,7 +47,7 @@ public class Menu {
                     System.out.println("Send Email");
                     break;
                 case 6:
-                    System.out.println("Generate Excel");
+                    menuActions.exportExcel();
                     break;
                 case 7:
                     System.out.println("Bye-bye");

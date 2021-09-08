@@ -27,6 +27,7 @@ public class FlightServices implements IFlightServices, IEmail {
             }
             else{
                 flightExists= false;
+                return null;
             }
         }
         return flightFound;
@@ -79,11 +80,16 @@ public class FlightServices implements IFlightServices, IEmail {
         sb.append("ID: ").append(flight.getId()).append("\n");
         sb.append("CODE: ").append(flight.getCode()).append("\n");
         sb.append("DEPARTURE AIRPORT: ").append(flight.getDepartureAirport().getName()).append("\n");
+        sb.append("DEPARTURE DATE: ").append(flight.getDepartureDate()).append("\n");
         sb.append("DEPARTURE TIME: ").append(flight.getDepartureTime()).append("\n");
         sb.append("ARRIVAL AIRPORT: ").append(flight.getArrivalAirport().getName()).append("\n");
+        sb.append("ARRIVAL DATE: ").append(flight.getArrivalDate()).append("\n");
         sb.append("ARRIVAL TIME: ").append(flight.getArrivalTime()).append("\n");
+        sb.append("DELAY DEPARTURE DATE: ").append(flight.getDelayDepartureDate()).append("\n");
         sb.append("DELAY DEPARTURE TIME: ").append(flight.getDelayDepartureTime()).append("\n");
+        sb.append("DELAY ARRIVAL DATE: ").append(flight.getDelayArrivalDate()).append("\n");
         sb.append("DELAY ARRIVAL TIME: ").append(flight.getDelayArrivalTime()).append("\n");
+        sb.append("DELAY ARRIVAL AIRPORT: ").append(flight.getDelayArrivalAirport().getName()).append("\n");
         sb.append("AIRCRAFT: ").append(flight.getAircraft().getModel()).append("\n");
         sb.append("FLIGHT STATUS: ").append(flight.getFlightStatus().getName()).append("\n");
 

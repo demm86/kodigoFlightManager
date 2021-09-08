@@ -7,12 +7,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class MenuActions {
 
     Scanner scanner = new Scanner(System.in);
     StringBuilder sb = new StringBuilder();
+    SheetUtil sheetUtil = new SheetUtil();
 
     CountryServices countryServices = new CountryServices();
     List<Country> countries;
@@ -41,7 +43,40 @@ public class MenuActions {
     List<Flight> flights = new ArrayList<>();
 
     public void showFlights(){
-        flightServices.printElements(flights);
+        if(flights.isEmpty()){
+            System.out.println("Flights is empty!\n");
+        }else{
+            flightServices.printElements(flights);
+        }
+    }
+
+    public void exportExcel(){
+        flight = new Flight();
+        countries = countryServices.setElements();
+        cities = cityServices.setElements(countries);
+        aircraftTypes = aircraftTypesServices.setAircraftType();
+        flightStatuses = flightStatusServices.setElements();
+        airlines = airlineServices.setAirline(countries);
+        airports = airportServices.setAirport(cities);
+        aircrafts = aircraftServices.setElements(airlines,aircraftTypes);
+        flight.setId(1);
+        flight.setCode("AAA");
+        flight.setDepartureAirport(airportServices.getAirport(1, airports));
+        flight.setArrivalAirport(airportServices.getAirport(6, airports));
+        flight.setDepartureDate(LocalDate.parse("2021-10-01"));
+        flight.setDepartureTime(LocalTime.parse("10:00"));
+        flight.setArrivalDate(LocalDate.parse("2021-10-02"));
+        flight.setArrivalTime(LocalTime.parse("11:30"));
+        //flight.setDelayDepartureDate("");
+        //flight.setDelayDepartureTime("");
+        //flight.setDelayArrivalDate("");
+        //flight.setDelayArrivalTime("");
+        //flight.setDelayArrivalAirport(flight.getArrivalAirport());
+        flight.setAircraft(aircraftServices.getAircraft(1, aircrafts));
+        flight.setFlightStatus(flightStatusServices.getFlightStatus(1, flightStatuses));
+        flights.add(flight);
+        SheetUtil sheetUtil = new SheetUtil();
+        sheetUtil.exportSheet(flights);
     }
 
     public void addFlight(){
@@ -165,10 +200,10 @@ public class MenuActions {
                     System.out.println("Would the flight still departure the same date: \n");
                     System.out.println("1. Yes \n2. No");
                     option1 = scanner.nextInt();
-                    if(option1==1){
+                    if(option1 == 1){
                         System.out.println("Please enter the new departure time: (Type format as the example: 12:43)");
                         flight.setDelayDepartureTime(LocalTime.parse(scanner.next()));
-                    }else {
+                    }else if(option1 == 2){
                         System.out.println("Please enter the new departure date: (Type format as the example: 2021-12-31)");
                         flight.setDelayDepartureDate(LocalDate.parse(scanner.next()));
                         System.out.println("Please enter the new departure time: (Type format as the example: 12:43)");
@@ -183,10 +218,10 @@ public class MenuActions {
                     System.out.println("Would the flight still arrive the same date: \n");
                     System.out.println("1. Yes \n2. No");
                     option2 = scanner.nextInt();
-                    if(option2==1){
+                    if(option2 == 1){
                         System.out.println("Please enter the new arrival time: (Type format as the example: 12:43)");
                         flight.setDelayArrivalTime(LocalTime.parse(scanner.next()));
-                    }else {
+                    }else if(option2 == 2) {
                         System.out.println("Please enter the new arrival date: (Type format as the example: 2021-12-31)");
                         flight.setDelayArrivalDate(LocalDate.parse(scanner.next()));
                         System.out.println("Please enter the new arrival time: (Type format as the example: 12:43)");
@@ -216,17 +251,35 @@ public class MenuActions {
         Airport airport;
 
         int selectedOption = 0;
-        while(selectedOption < 4){
+        while(selectedOption < 5){
             sb.setLength(0);
             sb.append("Search flight by: \n");
-            sb.append("1. Status\n");
-            sb.append("2. Departure airport\n");
-            sb.append("3. Arrival airport\n");
-            sb.append("4. Main menu\n");
+            sb.append("1. Id\n");
+            sb.append("2. Status\n");
+            sb.append("3. Departure airport\n");
+            sb.append("4. Arrival airport\n");
+            sb.append("5. Main menu\n");
             System.out.println(sb);
             selectedOption = Integer.parseInt(scanner.next());
             switch(selectedOption){
                 case 1:
+                    System.out.println("Type flight id\n");
+                    id = Integer.parseInt(scanner.next());
+                    flight = flightServices.searchFlightById(id, flights);
+                    if(Objects.isNull(flight)){
+                        System.out.println("Flight not found\n");
+                    }else{
+                        flightServices.printFlight(flight);
+                        System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
+                        int op = Integer.parseInt(scanner.next());
+                        if(op == 1){
+                            List<Flight> flightFound = new ArrayList<>();
+                            flightFound.add(flight);
+                            sheetUtil.exportSheet(flightFound);
+                        }
+                    }
+                    break;
+                case 2:
                     System.out.println("Select status: \n");
                     flightStatuses = flightStatusServices.setElements();
                     flightStatusServices.printElements(flightStatuses);
@@ -242,9 +295,18 @@ public class MenuActions {
 
                     List<Flight> flightsByStatus = flightServices.listByStatus(flightStatus, flights);
 
-                    flightServices.printElements(flightsByStatus);
+                    if(flightsByStatus.isEmpty()){
+                        System.out.println("Flights not found!\n");
+                    }else{
+                        flightServices.printElements(flightsByStatus);
+                        System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
+                        int op = Integer.parseInt(scanner.next());
+                        if(op == 1){
+                            sheetUtil.exportSheet(flightsByStatus);
+                        }
+                    }
                     break;
-                case 2:
+                case 3:
                     System.out.println("Select departure Airport: \n");
                     airportServices.printElements(airports);
                     do {
@@ -259,9 +321,18 @@ public class MenuActions {
 
                     List<Flight> flightsByDepartureAirport = flightServices.listByDepartureAirport(airport, flights);
 
-                    flightServices.printElements(flightsByDepartureAirport);
+                    if(flightsByDepartureAirport.isEmpty()){
+                        System.out.println("Flights not found!\n");
+                    }else{
+                        flightServices.printElements(flightsByDepartureAirport);
+                        System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
+                        int op = Integer.parseInt(scanner.next());
+                        if(op == 1){
+                            sheetUtil.exportSheet(flightsByDepartureAirport);
+                        }
+                    }
                     break;
-                case 3:
+                case 4:
                     System.out.println("Select arrival Airport: \n");
                     airportServices.printElements(airports);
                     do {
@@ -276,7 +347,16 @@ public class MenuActions {
 
                     List<Flight> flightsByArrivalAirport = flightServices.listByArrivalAirport(airport, flights);
 
-                    flightServices.printElements(flightsByArrivalAirport);
+                    if(flightsByArrivalAirport.isEmpty()){
+                        System.out.println("Flights not found!\n");
+                    }else{
+                        flightServices.printElements(flightsByArrivalAirport);
+                        System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
+                        int op = Integer.parseInt(scanner.next());
+                        if(op == 1){
+                            sheetUtil.exportSheet(flightsByArrivalAirport);
+                        }
+                    }
                     break;
             }
         }
