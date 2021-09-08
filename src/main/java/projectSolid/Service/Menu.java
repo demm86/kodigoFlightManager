@@ -10,9 +10,9 @@ public class Menu {
         Scanner scanner = new Scanner(System.in);
         MenuActions menuActions = new MenuActions();
 
-        int option=0;
+        int option;
 
-        while (option!=7){
+        while(true){
             sb.setLength(0);
             sb.append("-----------------------------------------\n");
             sb.append("FLIGHTS MANAGER\n");
@@ -29,30 +29,17 @@ public class Menu {
 
             option  = Integer.parseInt(scanner.next());
 
-            switch (option){
-
-                case 1:
-                    menuActions.addFlight();
-                    break;
-                case 2:
-                    menuActions.showFlights();
-                    break;
-                case 3:
-                    menuActions.updateFlight();
-                    break;
-                case 4:
-                    menuActions.searchFlight();
-                    break;
-                case 5:
-                    System.out.println("Send Email");
-                    break;
-                case 6:
-                    menuActions.exportExcel();
-                    break;
-                case 7:
+            switch (option) {
+                case 1 -> menuActions.addFlight();
+                case 2 -> menuActions.showFlights();
+                case 3 -> menuActions.updateFlight();
+                case 4 -> menuActions.searchFlight();
+                case 5 -> System.out.println("Send Email");
+                case 6 -> menuActions.exportExcel();
+                case 7 -> {
                     System.out.println("Bye-bye");
                     System.exit(0);
-                    break;
+                }
             }
 
         }

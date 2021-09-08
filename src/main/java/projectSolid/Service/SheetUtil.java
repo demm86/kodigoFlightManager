@@ -6,15 +6,13 @@ import org.apache.poi.ss.usermodel.Sheet;
 import projectSolid.Entities.Flight;
 
 import java.io.FileOutputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 public class SheetUtil {
+
+    String path = "C:/Users/wltrs/IdeaProjects/kodigoFlightManager/src/main/resources/";
 
     public void exportSheet(List<Flight> flights){
         Date dt = new Date();
@@ -120,7 +118,7 @@ public class SheetUtil {
         }
 
         try{
-            FileOutputStream out = new FileOutputStream("C:/Users/wltrs/IdeaProjects/kodigoFlightManager/src/main/resources/" + fileName);
+            FileOutputStream out = new FileOutputStream(path + fileName);
             book.write(out);
             out.close();
             System.out.println("File created successful\n");
