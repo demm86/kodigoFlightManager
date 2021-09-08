@@ -161,11 +161,37 @@ public class MenuActions {
 
             switch(selectedOption){
                 case 1:
+                    int option1;
+                    System.out.println("Would the flight still departure the same date: \n");
+                    System.out.println("1. Yes \n2. No");
+                    option1 = scanner.nextInt();
+                    if(option1==1){
+                        System.out.println("Please enter the new departure time: (Type format as the example: 12:43)");
+                        flight.setDelayDepartureTime(LocalTime.parse(scanner.next()));
+                    }else {
+                        System.out.println("Please enter the new departure date: (Type format as the example: 2021-12-31)");
+                        flight.setDelayDepartureDate(LocalDate.parse(scanner.next()));
+                        System.out.println("Please enter the new departure time: (Type format as the example: 12:43)");
+                        flight.setDelayDepartureTime(LocalTime.parse(scanner.next()));
+                    }
                     selectedFlightStatus = flightStatusServices.getFlightStatus(status,flightStatuses);
                     flightServices.changeStatus(selectedFlightStatus, selectedFlight, flights);
                     System.out.println("Departure time updated successfully");
                     break;
                 case 2:
+                    int option2;
+                    System.out.println("Would the flight still arrive the same date: \n");
+                    System.out.println("1. Yes \n2. No");
+                    option2 = scanner.nextInt();
+                    if(option2==1){
+                        System.out.println("Please enter the new arrival time: (Type format as the example: 12:43)");
+                        flight.setDelayArrivalTime(LocalTime.parse(scanner.next()));
+                    }else {
+                        System.out.println("Please enter the new arrival date: (Type format as the example: 2021-12-31)");
+                        flight.setDelayArrivalDate(LocalDate.parse(scanner.next()));
+                        System.out.println("Please enter the new arrival time: (Type format as the example: 12:43)");
+                        flight.setDelayArrivalTime(LocalTime.parse(scanner.next()));
+                    }
                     selectedFlightStatus=flightStatusServices.getFlightStatus(status,flightStatuses);
                     flightServices.changeStatus(selectedFlightStatus, selectedFlight, flights);
                     System.out.println("Arrival time updated successfully");
