@@ -222,6 +222,7 @@ public class MenuActions {
                             System.out.println("Please select the new arrival airport: ");
                             int newAirportId=Integer.parseInt(scanner.next());
                             newArrivalAirport =airportServices.getAirport(newAirportId, airports);
+                            flight.setArrivalAirport(newArrivalAirport);
                         }
                     }
                     selectedFlightStatus = flightStatusServices.getFlightStatus(status, flightStatuses);
