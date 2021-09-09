@@ -16,25 +16,25 @@ public class MenuActions {
     SheetUtil sheetUtil = new SheetUtil();
 
     CountryServices countryServices = new CountryServices();
-    List<Country> countries;
+    private final List<Country> countries = countryServices.setElements();
 
     CityServices cityServices = new CityServices();
-    List<City> cities;
+    private final List<City> cities = cityServices.setElements(countries);
 
     AircraftTypesServices aircraftTypesServices = new AircraftTypesServices();
-    List<AircraftType> aircraftTypes;
+    private final List<AircraftType> aircraftTypes = aircraftTypesServices.setAircraftType();
 
     FlightStatusServices flightStatusServices = new FlightStatusServices();
-    List<FlightStatus> flightStatuses;
+    private final List<FlightStatus> flightStatuses = flightStatusServices.setElements();
 
     AirlineServices airlineServices = new AirlineServices();
-    List<Airline> airlines;
+    private final List<Airline> airlines = airlineServices.setAirline(countries);
 
     AirportServices airportServices = new AirportServices();
-    List<Airport> airports;
+    private final List<Airport> airports = airportServices.setAirport(cities);
 
     AircraftServices aircraftServices = new AircraftServices();
-    List<Aircraft> aircrafts;
+    private final List<Aircraft> aircrafts = aircraftServices.setElements(airlines,aircraftTypes);
 
     Flight flight;
     FlightServices flightServices = new FlightServices();
@@ -51,13 +51,7 @@ public class MenuActions {
 
     public void exportExcel(){
         flight = new Flight();
-        countries = countryServices.setElements();
-        cities = cityServices.setElements(countries);
-        aircraftTypes = aircraftTypesServices.setAircraftType();
-        flightStatuses = flightStatusServices.setElements();
-        airlines = airlineServices.setAirline(countries);
-        airports = airportServices.setAirport(cities);
-        aircrafts = aircraftServices.setElements(airlines,aircraftTypes);
+
         flight.setId(1);
         flight.setCode("AAA");
         flight.setDepartureAirport(airportServices.getAirport(1, airports));
@@ -73,14 +67,6 @@ public class MenuActions {
 
     public void addFlight(){
         flight = new Flight();
-
-        countries = countryServices.setElements();
-        cities = cityServices.setElements(countries);
-        aircraftTypes = aircraftTypesServices.setAircraftType();
-        flightStatuses = flightStatusServices.setElements();
-        airlines = airlineServices.setAirline(countries);
-        airports = airportServices.setAirport(cities);
-        aircrafts = aircraftServices.setElements(airlines,aircraftTypes);
 
         sb.setLength(0);
         Airport selectedAirport;
@@ -169,7 +155,6 @@ public class MenuActions {
         flightServices.printFlight(selectedFlight);
 
         System.out.println("Select new status: ");
-        flightStatuses = flightStatusServices.setElements();
         flightStatusServices.printElements(flightStatuses);
 
         int status = Integer.parseInt(scanner.next());
@@ -203,6 +188,8 @@ public class MenuActions {
                     System.out.println("Departure time updated successfully");
                 }
                 case 2 -> {
+                    int arrivalAirport;
+                    Airport newArrivalAirport;
                     System.out.println("Would the flight still arrive the same date: \n");
                     System.out.println("1. Yes \n2. No");
                     op = scanner.nextInt();
@@ -221,7 +208,7 @@ public class MenuActions {
                             airportServices.printElements(airports);
                             System.out.println("Please select the new arrival airport: ");
                             int newAirportId=Integer.parseInt(scanner.next());
-                            newArrivalAirport =airportServices.getAirport(newAirportId, airports);
+                            newArrivalAirport = airportServices.getAirport(newAirportId, airports);
                             flight.setArrivalAirport(newArrivalAirport);
                         }
                     }
@@ -237,10 +224,6 @@ public class MenuActions {
     }
 
     public void searchFlight(){
-        countries = countryServices.setElements();
-        cities = cityServices.setElements(countries);
-        airports = airportServices.setAirport(cities);
-
         int id;
         boolean flag = true;
 
@@ -278,7 +261,6 @@ public class MenuActions {
                 }
                 case 2 -> {
                     System.out.println("Select status: \n");
-                    flightStatuses = flightStatusServices.setElements();
                     flightStatusServices.printElements(flightStatuses);
                     do {
                         id = Integer.parseInt(scanner.next());
