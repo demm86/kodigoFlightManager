@@ -4,11 +4,16 @@ import projectSolid.Entities.Airline;
 import projectSolid.Entities.Airport;
 import projectSolid.Entities.City;
 import projectSolid.Interfaces.IAirportServices;
+import projectSolid.Service.Weather.OpenWeatherClient;
+import projectSolid.Service.Weather.WeatherForecastResponse;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AirportServices implements IAirportServices {
+    public static OpenWeatherClient openWeatherClient = new OpenWeatherClient();
+
     @Override
     public List<Airport> setAirport(List<City> list) {
         List<Airport> airports = new ArrayList<>();
@@ -40,15 +45,35 @@ public class AirportServices implements IAirportServices {
 
     @Override
     public void printElements(List<Airport> list) {
+        
         StringBuilder sb = new StringBuilder();
-        sb.append("AIRPORT LIST\n");
-        sb.append("-----------------------------------------------\n");
-        for (Airport airport: list) {
-            sb.append("ID: ").append(airport.getId()).append(" |");
-            sb.append("CODE: ").append(airport.getCode()).append(" |");
-            sb.append("NAME: ").append(airport.getName()).append(" |");
-            sb.append("CITY: ").append(airport.getCity().getName()).append("\n");
+        WeatherForecastResponse wf = new WeatherForecastResponse();
+
+        try {
+
+            sb.append("AIRPORT LIST\n");
+            sb.append("-----------------------------------------------\n");
+
+            for (Airport airport: list) {
+                wf = openWeatherClient.forecastWeatherAtCity(airport.getCity().getName());
+                sb.append("ID: ").append(airport.getId()).append(" |");
+                sb.append("CODE: ").append(airport.getCode()).append(" |");
+                sb.append("NAME: ").append(airport.getName()).append(" |");
+                sb.append("CITY: ").append(airport.getCity().getName()).append("\n");
+                sb.append(wf.stringElements());
+            }
+
+
+
+        } catch (IOException e) {
+            System.out.println("error: "+ e.toString());
+            e.printStackTrace();
+
         }
+
+
         System.out.println(sb);
+
+
     }
 }
