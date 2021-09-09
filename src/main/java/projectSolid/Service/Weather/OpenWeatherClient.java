@@ -41,7 +41,6 @@ public class OpenWeatherClient {
         return new WeatherForecastResponse (response);
     }
 
-
     private JSONObject doQuery (String subUrl) throws JSONException, IOException {
         String responseBody = null;
         HttpGet httpget = new HttpGet (this.baseOwmUrl + subUrl);
