@@ -181,7 +181,7 @@ public class MenuActions {
                 case 2:
                     int option2;
                     int arrivalAirport;
-                    Airport selectedAirport;
+                    Airport newArrivalAirport;
                     System.out.println("Would the flight still arrive the same date: \n");
                     System.out.println("1. Yes \n2. No");
                     option2 = scanner.nextInt();
@@ -195,8 +195,8 @@ public class MenuActions {
                             airportServices.printElements(airports);
                             System.out.println("Please select the new arrival airport: ");
                             int newAirportId=Integer.parseInt(scanner.next());
-                            selectedAirport =airportServices.getAirport(newAirportId, airports);
-                            flight.setArrivalAirport(selectedAirport);
+                            newArrivalAirport =airportServices.getAirport(newAirportId, airports);
+                            flight.setArrivalAirport(newArrivalAirport);
                         }
                     }else {
                         System.out.println("Please enter the new arrival date: (Type format as the example: 2021-12-31)");
@@ -210,8 +210,8 @@ public class MenuActions {
                             airportServices.printElements(airports);
                             System.out.println("Please select the new arrival airport: ");
                             int newAirportId=Integer.parseInt(scanner.next());
-                            selectedAirport =airportServices.getAirport(newAirportId, airports);
-                            flight.setArrivalAirport(selectedAirport);
+                            newArrivalAirport =airportServices.getAirport(newAirportId, airports);
+                            flight.setArrivalAirport(newArrivalAirport);
                         }
                     }
                     selectedFlightStatus=flightStatusServices.getFlightStatus(status,flightStatuses);
