@@ -22,7 +22,7 @@ public class CityServices implements ICityServices {
         cities.add(new City(5, "PRS", "Paris", list.get(6)));
 
         cities.add(new City(6, "TKY", "Tokyo" , list.get(10)));
-        cities.add(new City(7, "PKN", "Pekín", list.get(12)));
+        cities.add(new City(7, "PKN", "Pekin", list.get(12)));
 
         return cities;
 
@@ -49,6 +49,7 @@ public class CityServices implements ICityServices {
             sb.append("CODE: ").append(city.getCode()).append(" |");
             sb.append("NAME: ").append(city.getName()).append(" |");
             sb.append("COUNTRY: ").append(city.getCountry().getName()).append("\n");
+
         }
         System.out.println(sb);
     }

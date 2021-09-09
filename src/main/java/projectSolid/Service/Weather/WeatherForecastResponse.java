@@ -58,6 +58,21 @@ public class WeatherForecastResponse  {
 
     }
 
+    public String stringElements() {
+        StringBuilder sb = new StringBuilder();
+        //sb.append("-----------------------------------------").append("\n");
+        //sb.append("City: "+this.getCity()).append(" || ");
+        sb.append("Weather: " + this.weatherDescription.getMain() +" - "+this.weatherDescription.getDescription()).append("||").append("\n");
+        sb.append("Temp --> Current :"+this.main.getTemperature()+" Feels Like: "+ this.main.getFeels_like() ).append("||");
+        sb.append("Wind --> Speed: "+this.wind.getSpeed()+" Angle: "+ this.wind.getDeg()+ " Gust: " +this.wind.getGust()).append("\n");
+        sb.append("-----------------------------------------").append("\n");
+
+        return sb.toString();
+    }
+
+
+
+
 }
 
 
