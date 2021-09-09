@@ -63,6 +63,24 @@ public class MenuActions {
         flight.setAircraft(aircraftServices.getAircraft(1, aircrafts));
         flight.setFlightStatus(flightStatusServices.getFlightStatus(1, flightStatuses));
         flights.add(flight);
+
+        Flight f = new Flight();
+
+        f.setId(2);
+        f.setCode("AAA");
+        f.setDepartureAirport(airportServices.getAirport(1, airports));
+        f.setArrivalAirport(airportServices.getAirport(2, airports));
+        f.setDepartureDate(LocalDate.parse("2021-10-10"));
+        f.setDepartureTime(LocalTime.parse("10:45"));
+        f.setArrivalDate(LocalDate.parse("2021-10-11"));
+        f.setArrivalTime(LocalTime.parse("01:30"));
+        f.setAircraft(aircraftServices.getAircraft(2, aircrafts));
+        f.setFlightStatus(flightStatusServices.getFlightStatus(1, flightStatuses));
+        flights.add(f);
+    }
+
+    public void importExcel(){
+        sheetUtil.importExcel();
     }
 
     public void addFlight(){

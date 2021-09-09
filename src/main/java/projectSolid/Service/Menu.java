@@ -22,7 +22,7 @@ public class Menu {
             sb.append("3. Update flights\n");
             sb.append("4. Search flight\n");
             sb.append("5. Send Email\n");
-            sb.append("6. Generate excel\n");
+            sb.append("6. Add two flights\n");
             sb.append("7. Exit\n");
             sb.append("------------------------------------------\n");
             System.out.println(sb);
@@ -34,7 +34,7 @@ public class Menu {
                 case 2 -> menuActions.showFlights();
                 case 3 -> menuActions.updateFlight();
                 case 4 -> menuActions.searchFlight();
-                case 5 -> System.out.println("Send Email");
+                case 5 -> System.out.println("Send email\n");
                 case 6 -> menuActions.exportExcel();
                 case 7 -> {
                     System.out.println("Bye-bye");
