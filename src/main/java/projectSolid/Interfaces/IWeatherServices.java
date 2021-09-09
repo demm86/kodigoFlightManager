@@ -1,11 +1,11 @@
 package projectSolid.Interfaces;
 
 
-import projectSolid.Entities.Weather;
+import projectSolid.Entities.WeatherAirport;
 
 import java.util.List;
 
 public interface IWeatherServices {
-    List<Weather> setNote();
-    void printElements(List<Weather> list);
+    List<WeatherAirport> setNote();
+    void printElements(List<WeatherAirport> list);
 }

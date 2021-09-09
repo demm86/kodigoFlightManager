@@ -2,7 +2,8 @@ package projectSolid.Entities;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import java.time.LocalDateTime;
+import java.time.*;
+
 
 @Data
 public class Flight {
@@ -15,13 +16,21 @@ public class Flight {
     @Getter @Setter
     private Airport arrivalAirport;
     @Getter @Setter
-    private LocalDateTime departureTime;
+    private LocalDate departureDate;
     @Getter @Setter
-    private LocalDateTime arrivalTime;
+    private LocalTime departureTime;
     @Getter @Setter
-    private LocalDateTime delayDepartureTime;
+    private LocalDate arrivalDate;
     @Getter @Setter
-    private LocalDateTime delayArrivalTime;
+    private LocalTime arrivalTime;
+    @Getter @Setter
+    private LocalDate delayDepartureDate;
+    @Getter @Setter
+    private LocalTime delayDepartureTime;
+    @Getter @Setter
+    private LocalDate delayArrivalDate;
+    @Getter @Setter
+    private LocalTime delayArrivalTime;
     @Getter @Setter
     private Airport delayArrivalAirport;
     @Getter @Setter

@@ -6,7 +6,7 @@ import projectSolid.Entities.Airport;
 import java.time.LocalDateTime;
 
 @Data
-public class Weather {
+public class WeatherAirport {
     private int id;
     private Airport airport;
     private LocalDateTime dateTime;
