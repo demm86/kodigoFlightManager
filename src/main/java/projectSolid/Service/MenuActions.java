@@ -13,27 +13,28 @@ public class MenuActions {
 
     Scanner scanner = new Scanner(System.in);
     StringBuilder sb = new StringBuilder();
+    SheetUtil sheetUtil = new SheetUtil();
 
     CountryServices countryServices = new CountryServices();
-    List<Country> countries;
+    private final List<Country> countries = countryServices.setElements();
 
     CityServices cityServices = new CityServices();
-    List<City> cities;
+    private final List<City> cities = cityServices.setElements(countries);
 
     AircraftTypesServices aircraftTypesServices = new AircraftTypesServices();
-    List<AircraftType> aircraftTypes;
+    private final List<AircraftType> aircraftTypes = aircraftTypesServices.setAircraftType();
 
     FlightStatusServices flightStatusServices = new FlightStatusServices();
-    List<FlightStatus> flightStatuses;
+    private final List<FlightStatus> flightStatuses = flightStatusServices.setElements();
 
     AirlineServices airlineServices = new AirlineServices();
-    List<Airline> airlines;
+    private final List<Airline> airlines = airlineServices.setAirline(countries);
 
     AirportServices airportServices = new AirportServices();
-    List<Airport> airports;
+    private final List<Airport> airports = airportServices.setAirport(cities);
 
     AircraftServices aircraftServices = new AircraftServices();
-    List<Aircraft> aircrafts;
+    private final List<Aircraft> aircrafts = aircraftServices.setElements(airlines,aircraftTypes);
 
     Flight flight;
     FlightServices flightServices = new FlightServices();
@@ -41,19 +42,31 @@ public class MenuActions {
     List<Flight> flights = new ArrayList<>();
 
     public void showFlights(){
-        flightServices.printElements(flights);
+        if(flights.isEmpty()){
+            System.out.println("Flights is empty!\n");
+        }else{
+            flightServices.printElements(flights);
+        }
+    }
+
+    public void exportExcel(){
+        flight = new Flight();
+
+        flight.setId(1);
+        flight.setCode("AAA");
+        flight.setDepartureAirport(airportServices.getAirport(1, airports));
+        flight.setArrivalAirport(airportServices.getAirport(6, airports));
+        flight.setDepartureDate(LocalDate.parse("2021-10-01"));
+        flight.setDepartureTime(LocalTime.parse("10:00"));
+        flight.setArrivalDate(LocalDate.parse("2021-10-02"));
+        flight.setArrivalTime(LocalTime.parse("11:30"));
+        flight.setAircraft(aircraftServices.getAircraft(1, aircrafts));
+        flight.setFlightStatus(flightStatusServices.getFlightStatus(1, flightStatuses));
+        flights.add(flight);
     }
 
     public void addFlight(){
         flight = new Flight();
-
-        countries = countryServices.setElements();
-        cities = cityServices.setElements(countries);
-        aircraftTypes = aircraftTypesServices.setAircraftType();
-        flightStatuses = flightStatusServices.setElements();
-        airlines = airlineServices.setAirline(countries);
-        airports = airportServices.setAirport(cities);
-        aircrafts = aircraftServices.setElements(airlines,aircraftTypes);
 
         sb.setLength(0);
         Airport selectedAirport;
@@ -142,7 +155,6 @@ public class MenuActions {
         flightServices.printFlight(selectedFlight);
 
         System.out.println("Select new status: ");
-        flightStatuses = flightStatusServices.setElements();
         flightStatusServices.printElements(flightStatuses);
 
         int status = Integer.parseInt(scanner.next());
@@ -151,28 +163,60 @@ public class MenuActions {
             flightServices.changeStatus(selectedFlightStatus, selectedFlight, flights);
             System.out.println("Status updated successfully");
         }else if(status == 3){
-            StringBuilder sb = new StringBuilder();
-            sb.append("What is delayed? Departure or Arrival time: \n");
-            sb.append("1. Departure time\n").append("2. Arrival time\n");
+            String sb = "What is delayed? Departure or Arrival time:\n 1. Departure time\n 2. Arrival time\n";
             System.out.println(sb);
             int selectedOption = Integer.parseInt(scanner.next());
 
             FlightStatus selectedFlightStatus;
-
-            switch(selectedOption){
-                case 1:
-                    selectedFlightStatus = flightStatusServices.getFlightStatus(status,flightStatuses);
+            int op;
+            switch (selectedOption) {
+                case 1 -> {
+                    System.out.println("Would the flight still departure the same date: \n");
+                    System.out.println("1. Yes \n2. No");
+                    op = scanner.nextInt();
+                    if (op == 1) {
+                        System.out.println("Please enter the new departure time: (Type format as the example: 12:43)");
+                        flight.setDelayDepartureTime(LocalTime.parse(scanner.next()));
+                    } else if (op == 2) {
+                        System.out.println("Please enter the new departure date: (Type format as the example: 2021-12-31)");
+                        flight.setDelayDepartureDate(LocalDate.parse(scanner.next()));
+                        System.out.println("Please enter the new departure time: (Type format as the example: 12:43)");
+                        flight.setDelayDepartureTime(LocalTime.parse(scanner.next()));
+                    }
+                    selectedFlightStatus = flightStatusServices.getFlightStatus(status, flightStatuses);
                     flightServices.changeStatus(selectedFlightStatus, selectedFlight, flights);
                     System.out.println("Departure time updated successfully");
-                    break;
-                case 2:
-                    selectedFlightStatus=flightStatusServices.getFlightStatus(status,flightStatuses);
+                }
+                case 2 -> {
+                    int arrivalAirport;
+                    Airport newArrivalAirport;
+                    System.out.println("Would the flight still arrive the same date: \n");
+                    System.out.println("1. Yes \n2. No");
+                    op = scanner.nextInt();
+                    if (op == 1) {
+                        System.out.println("Please enter the new arrival time: (Type format as the example: 12:43)");
+                        flight.setDelayArrivalTime(LocalTime.parse(scanner.next()));
+                    } else if (op == 2) {
+                        System.out.println("Please enter the new arrival date: (Type format as the example: 2021-12-31)");
+                        flight.setDelayArrivalDate(LocalDate.parse(scanner.next()));
+                        System.out.println("Please enter the new arrival time: (Type format as the example: 12:43)");
+                        flight.setDelayArrivalTime(LocalTime.parse(scanner.next()));
+                        System.out.println("Do you have to change the arrival airport: \n");
+                        System.out.println("1: Yes \n2. No");
+                        arrivalAirport = scanner.nextInt();
+                        if(arrivalAirport==1){
+                            airportServices.printElements(airports);
+                            System.out.println("Please select the new arrival airport: ");
+                            int newAirportId=Integer.parseInt(scanner.next());
+                            newArrivalAirport = airportServices.getAirport(newAirportId, airports);
+                            flight.setArrivalAirport(newArrivalAirport);
+                        }
+                    }
+                    selectedFlightStatus = flightStatusServices.getFlightStatus(status, flightStatuses);
                     flightServices.changeStatus(selectedFlightStatus, selectedFlight, flights);
                     System.out.println("Arrival time updated successfully");
-                    break;
-                default:
-                    System.out.println("Option incorrect");
-                    break;
+                }
+                default -> System.out.println("Option incorrect");
             }
         }else{
             System.out.println("Status incorrect");
@@ -180,78 +224,113 @@ public class MenuActions {
     }
 
     public void searchFlight(){
-        countries = countryServices.setElements();
-        cities = cityServices.setElements(countries);
-        airports = airportServices.setAirport(cities);
-
         int id;
         boolean flag = true;
 
         Airport airport;
 
         int selectedOption = 0;
-        while(selectedOption < 4){
+        while(selectedOption < 5){
             sb.setLength(0);
             sb.append("Search flight by: \n");
-            sb.append("1. Status\n");
-            sb.append("2. Departure airport\n");
-            sb.append("3. Arrival airport\n");
-            sb.append("4. Main menu\n");
+            sb.append("1. Id\n");
+            sb.append("2. Status\n");
+            sb.append("3. Departure airport\n");
+            sb.append("4. Arrival airport\n");
+            sb.append("5. Main menu\n");
             System.out.println(sb);
             selectedOption = Integer.parseInt(scanner.next());
-            switch(selectedOption){
-                case 1:
+            int op;
+            switch (selectedOption) {
+                case 1 -> {
+                    System.out.println("Type flight id\n");
+                    id = Integer.parseInt(scanner.next());
+                    flight = flightServices.searchFlightById(id, flights);
+                    if (flight.getId() == 0) {
+                        System.out.println("Flight not found\n");
+                    } else {
+                        flightServices.printFlight(flight);
+                        System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
+                        op = Integer.parseInt(scanner.next());
+                        if (op == 1) {
+                            List<Flight> flightFound = new ArrayList<>();
+                            flightFound.add(flight);
+                            sheetUtil.exportSheet(flightFound);
+                        }
+                    }
+                }
+                case 2 -> {
                     System.out.println("Select status: \n");
-                    flightStatuses = flightStatusServices.setElements();
                     flightStatusServices.printElements(flightStatuses);
                     do {
                         id = Integer.parseInt(scanner.next());
-                        if(id < 0 || id > flightStatuses.size()){
+                        if (id < 0 || id > flightStatuses.size()) {
                             System.out.println("Option incorrect. Please enter the correct number: ");
-                        }else{
+                        } else {
                             flag = false;
                         }
-                    }while(flag);
+                    } while (flag);
                     FlightStatus flightStatus = flightStatusServices.getFlightStatus(id, flightStatuses);
-
                     List<Flight> flightsByStatus = flightServices.listByStatus(flightStatus, flights);
-
-                    flightServices.printElements(flightsByStatus);
-                    break;
-                case 2:
+                    if (flightsByStatus.isEmpty()) {
+                        System.out.println("Flights not found!\n");
+                    } else {
+                        flightServices.printElements(flightsByStatus);
+                        System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
+                        op = Integer.parseInt(scanner.next());
+                        if (op == 1) {
+                            sheetUtil.exportSheet(flightsByStatus);
+                        }
+                    }
+                }
+                case 3 -> {
                     System.out.println("Select departure Airport: \n");
                     airportServices.printElements(airports);
                     do {
                         id = Integer.parseInt(scanner.next());
-                        if(id < 0 || id > airports.size()){
+                        if (id < 0 || id > airports.size()) {
                             System.out.println("Option incorrect. Please enter the correct number: ");
-                        }else{
+                        } else {
                             flag = false;
                         }
-                    }while(flag);
+                    } while (flag);
                     airport = airportServices.getAirport(id, airports);
-
                     List<Flight> flightsByDepartureAirport = flightServices.listByDepartureAirport(airport, flights);
-
-                    flightServices.printElements(flightsByDepartureAirport);
-                    break;
-                case 3:
+                    if (flightsByDepartureAirport.isEmpty()) {
+                        System.out.println("Flights not found!\n");
+                    } else {
+                        flightServices.printElements(flightsByDepartureAirport);
+                        System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
+                        op = Integer.parseInt(scanner.next());
+                        if (op == 1) {
+                            sheetUtil.exportSheet(flightsByDepartureAirport);
+                        }
+                    }
+                }
+                case 4 -> {
                     System.out.println("Select arrival Airport: \n");
                     airportServices.printElements(airports);
                     do {
                         id = Integer.parseInt(scanner.next());
-                        if(id < 0 || id > airports.size()){
+                        if (id < 0 || id > airports.size()) {
                             System.out.println("Option incorrect. Please enter the correct number: ");
-                        }else{
+                        } else {
                             flag = false;
                         }
-                    }while(flag);
+                    } while (flag);
                     airport = airportServices.getAirport(id, airports);
-
                     List<Flight> flightsByArrivalAirport = flightServices.listByArrivalAirport(airport, flights);
-
-                    flightServices.printElements(flightsByArrivalAirport);
-                    break;
+                    if (flightsByArrivalAirport.isEmpty()) {
+                        System.out.println("Flights not found!\n");
+                    } else {
+                        flightServices.printElements(flightsByArrivalAirport);
+                        System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
+                        op = Integer.parseInt(scanner.next());
+                        if (op == 1) {
+                            sheetUtil.exportSheet(flightsByArrivalAirport);
+                        }
+                    }
+                }
             }
         }
     }
