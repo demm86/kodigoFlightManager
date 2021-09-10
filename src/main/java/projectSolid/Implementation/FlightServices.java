@@ -120,6 +120,8 @@ public class FlightServices implements IFlightServices, IEmail {
         for (Flight flight: list) {
             sb.append("ID: ").append(flight.getId()).append(" |");
             sb.append("CODE: ").append(flight.getCode()).append(" |");
+            sb.append("DEPARTURE: ").append(flight.getDepartureAirport().getCode()).append(" |");
+            sb.append("ARRIVAL: ").append(flight.getArrivalAirport().getCode()).append(" |");
             sb.append("FLIGHT STATUS: ").append(flight.getFlightStatus().getName()).append("\n");
         }
         System.out.println(sb);

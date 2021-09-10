@@ -41,7 +41,7 @@ public class Menu {
             loadMenu();
 
             option  = Integer.parseInt(scanner.next());
-
+            menuActions.setValues();
             switch (option) {
                 case 1 -> menuActions.addFlight();
                 case 2 -> menuActions.showFlights();

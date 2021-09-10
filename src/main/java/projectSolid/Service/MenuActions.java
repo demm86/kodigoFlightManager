@@ -41,6 +41,7 @@ public class MenuActions {
 
     List<Flight> flights = new ArrayList<>();
 
+
     public void showFlights(){
         if(flights.isEmpty()){
             System.out.println("Flights is empty!\n");
@@ -83,8 +84,7 @@ public class MenuActions {
         sheetUtil.importExcel();
     }
 
-    public void addFlight(){
-        flight = new Flight();
+    public void setValues(){
 
         countries = countryServices.setElements();
         cities = cityServices.setElements(countries);
@@ -93,6 +93,49 @@ public class MenuActions {
         airlines = airlineServices.setAirline(countries);
         airports = airportServices.setAirport(cities);
         aircrafts = aircraftServices.setElements(airlines,aircraftTypes);
+
+        flight = new Flight();
+        flight.setId(1);
+        flight.setCode("ABC1");
+        flight.setAircraft(aircrafts.get(0));
+        flight.setFlightStatus(flightStatuses.get(0));
+        flight.setArrivalAirport(airports.get(0));
+        flight.setDepartureAirport(airports.get(1));
+        flightServices.add(flight, flights);
+
+        flight = new Flight();
+        flight.setId(2);
+        flight.setCode("ABC2");
+        flight.setAircraft(aircrafts.get(1));
+        flight.setFlightStatus(flightStatuses.get(1));
+        flight.setArrivalAirport(airports.get(1));
+        flight.setDepartureAirport(airports.get(2));
+        flightServices.add(flight, flights);
+
+        flight = new Flight();
+        flight.setId(3);
+        flight.setCode("ABC3");
+        flight.setAircraft(aircrafts.get(2));
+        flight.setFlightStatus(flightStatuses.get(2));
+        flight.setArrivalAirport(airports.get(2));
+        flight.setDepartureAirport(airports.get(3));
+        flightServices.add(flight, flights);
+
+        flight = new Flight();
+        flight.setId(3);
+        flight.setCode("ABC4");
+        flight.setAircraft(aircrafts.get(2));
+        flight.setFlightStatus(flightStatuses.get(3));
+        flight.setArrivalAirport(airports.get(3));
+        flight.setDepartureAirport(airports.get(4));
+        flightServices.add(flight, flights);
+    }
+
+
+    public void addFlight(){
+        flight = new Flight();
+
+
 
         sb.setLength(0);
         Airport selectedAirport;
@@ -193,9 +236,7 @@ public class MenuActions {
     }
 
     public void searchFlight(){
-        countries = countryServices.setElements();
-        cities = cityServices.setElements(countries);
-        airports = airportServices.setAirport(cities);
+
 
         int id = 0;
         boolean flag = true;
@@ -470,10 +511,11 @@ public class MenuActions {
         printFlightStatusList(flightStatuses);
         do {
             id = Integer.parseInt(scanner.next());
-            if (id < 0 || id > flightStatuses.size()) {
-                System.out.println("Option incorrect. Please enter the correct number: ");
-            } else {
+            if (id > 0 || id < flightStatuses.size()) {
                 flag = false;
+
+            } else {
+                System.out.println("Option incorrect. Please enter the correct number: ");
             }
         } while (flag);
         FlightStatus flightStatus = flightStatusServices.getFlightStatus(id, flightStatuses);
