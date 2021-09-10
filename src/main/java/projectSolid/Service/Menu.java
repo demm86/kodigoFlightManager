@@ -35,11 +35,12 @@ public class Menu {
                 case 3 -> menuActions.updateFlight();
                 case 4 -> menuActions.searchFlight();
                 case 5 -> System.out.println("Send Email");
-                case 6 -> menuActions.exportExcel();
+                //case 6 -> menuActions.exportExcel();
                 case 7 -> {
                     System.out.println("Bye-bye");
                     System.exit(0);
                 }
+                default -> System.out.println("invalid option");
             }
 
         }
