@@ -148,7 +148,9 @@ public class MenuActions {
 
         System.out.println("Arrival time: (Type format as the example: 12:43)");
         flight.setArrivalTime(LocalTime.parse(scanner.next()));*/
-            saveFlight();
+
+            readDepartureArrivaltimes();
+
 
         do{
             aircraftServices.printElements(aircrafts);
@@ -215,22 +217,111 @@ public class MenuActions {
             int op=0;
             switch (selectedOption) {
                 case 1 -> {
+                    /*Extract Method*/
+                    /*System.out.println("Select status: \n");
+                    flightStatuses = flightStatusServices.setElements();
+                    flightStatusServices.printElements(flightStatuses);
+                    printFlightStatusList(flightStatuses);
+                    do {
+                        id = Integer.parseInt(scanner.next());
+                        if (id < 0 || id > flightStatuses.size()) {
+                            System.out.println("Option incorrect. Please enter the correct number: ");
+                        } else {
+                            flag = false;
+                        }
+                    } while (flag);
+                    FlightStatus flightStatus = flightStatusServices.getFlightStatus(id, flightStatuses);
+                    List<Flight> flightsByStatus = flightServices.listByStatus(flightStatus, flights);
+                    if (flightsByStatus.isEmpty()) {
+                        System.out.println("Flights not found!\n");
+                    } else {
+                        flightServices.printElements(flightsByStatus);
+                        System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
+                        op = Integer.parseInt(scanner.next());
+                        if (op == 1) {
+                            sheetUtil.exportSheet(flightsByStatus);
+                        }
+                    }*/
                     searchFlightbyId(id,op);
                 }
                 case 2 -> {
+
+                    /*Extract Method*/
+                    /*System.out.println("Type flight id\n");
+                    id = Integer.parseInt(scanner.next());
+                    flight = flightServices.searchFlightById(id, flights);
+                    if (flight.getId() == 0) {
+                        System.out.println("Flight not found\n");
+                    } else {
+                        flightServices.printFlight(flight);
+                        System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
+                        op = Integer.parseInt(scanner.next());
+                        if (op == 1) {
+                            List<Flight> flightFound = new ArrayList<>();
+                            flightFound.add(flight);
+                            sheetUtil.exportSheet(flightFound);
+                        }
+                    }*/
                     searchFlightByStatus(id,flag, op);
                 }
                 case 3 -> {
+                    /*Extract Method*/
+                    /*System.out.println("Select departure Airport: \n");
+                    airportServices.printElements(airports);
+                    do {
+                        id = Integer.parseInt(scanner.next());
+                        if (id < 0 || id > airports.size()) {
+                            System.out.println("Option incorrect. Please enter the correct number: ");
+                        } else {
+                            flag = false;
+                        }
+                    } while (flag);
+                    airport = airportServices.getAirport(id, airports);
+                    List<Flight> flightsByDepartureAirport = flightServices.listByDepartureAirport(airport, flights);
+                    if (flightsByDepartureAirport.isEmpty()) {
+                        System.out.println("Flights not found!\n");
+                    } else {
+                        flightServices.printElements(flightsByDepartureAirport);
+                        System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
+                        op = Integer.parseInt(scanner.next());
+                        if (op == 1) {
+                            sheetUtil.exportSheet(flightsByDepartureAirport);
+                        }
+                    }*/
+
                     searchFlightByDepartureAirport(id,flag,airports,op,airport);
                 }
                 case 4 -> {
+                    /*Extract Method*/
+                    /*System.out.println("Select arrival Airport: \n");
+                    airportServices.printElements(airports);
+                    do {
+                        id = Integer.parseInt(scanner.next());
+                        if (id < 0 || id > airports.size()) {
+                            System.out.println("Option incorrect. Please enter the correct number: ");
+                        } else {
+                            flag = false;
+                        }
+                    } while (flag);
+                    airport = airportServices.getAirport(id, airports);
+                    List<Flight> flightsByArrivalAirport = flightServices.listByArrivalAirport(airport, flights);
+                    if (flightsByArrivalAirport.isEmpty()) {
+                        System.out.println("Flights not found!\n");
+                    } else {
+                        flightServices.printElements(flightsByArrivalAirport);
+                        System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
+                        op = Integer.parseInt(scanner.next());
+                        if (op == 1) {
+                            sheetUtil.exportSheet(flightsByArrivalAirport);
+                        }
+                    }*/
                     searchFlightByArrivalAirport(id,flag,op,airport);
                 }
             }
         }
     }
 
-    public void saveFlight(){
+    public void readDepartureArrivaltimes(){
         System.out.println("Departure date: (Type format as the example: 2021-12-31)");
         flight.setDepartureDate(LocalDate.parse(scanner.next()));
 
