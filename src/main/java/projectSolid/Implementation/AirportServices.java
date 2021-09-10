@@ -55,12 +55,13 @@ public class AirportServices implements IAirportServices {
             sb.append("-----------------------------------------------\n");
 
             for (Airport airport: list) {
-                wf = openWeatherClient.forecastWeatherAtCity(airport.getCity().getName());
+               /* wf = openWeatherClient.forecastWeatherAtCity(airport.getCity().getName());
                 sb.append("ID: ").append(airport.getId()).append(" |");
                 sb.append("CODE: ").append(airport.getCode()).append(" |");
                 sb.append("NAME: ").append(airport.getName()).append(" |");
                 sb.append("CITY: ").append(airport.getCity().getName()).append("\n");
-                sb.append(wf.stringElements());
+                sb.append(wf.stringElements());*/
+                System.out.println(getElements(airport));
             }
 
 
@@ -75,5 +76,20 @@ public class AirportServices implements IAirportServices {
         System.out.println(sb);
 
 
+    }
+
+    public String getElements(Airport airport) throws IOException {
+
+        StringBuilder sb = new StringBuilder();
+        WeatherForecastResponse wf = new WeatherForecastResponse();
+        wf = openWeatherClient.forecastWeatherAtCity(airport.getCity().getName());
+
+        sb.append("ID: ").append(airport.getId()).append(" |");
+        sb.append("CODE: ").append(airport.getCode()).append(" |");
+        sb.append("NAME: ").append(airport.getName()).append(" |");
+        sb.append("CITY: ").append(airport.getCity().getName()).append("\n");
+        /*sb.append(wf.stringElements());*/
+
+        return sb.append(wf.stringElements()).toString();
     }
 }
