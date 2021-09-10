@@ -4,16 +4,16 @@ import java.util.Scanner;
 
 public class Menu {
 
-
+    StringBuilder sb = new StringBuilder();
+    Scanner scanner = new Scanner(System.in);
+    MenuActions menuActions = new MenuActions();
     public void shoMenu() {
-        StringBuilder sb = new StringBuilder();
-        Scanner scanner = new Scanner(System.in);
-        MenuActions menuActions = new MenuActions();
+
 
         int option;
 
         while(true){
-            sb.setLength(0);
+            /*sb.setLength(0);
             sb.append("-----------------------------------------\n");
             sb.append("FLIGHTS MANAGER\n");
             sb.append("Select an option\n");
@@ -25,7 +25,8 @@ public class Menu {
             sb.append("6. Generate excel\n");
             sb.append("7. Exit\n");
             sb.append("------------------------------------------\n");
-            System.out.println(sb);
+            System.out.println(sb);*/
+            loadMenu();
 
             option  = Integer.parseInt(scanner.next());
 
@@ -34,9 +35,7 @@ public class Menu {
                 case 2 -> menuActions.showFlights();
                 case 3 -> menuActions.updateFlight();
                 case 4 -> menuActions.searchFlight();
-                case 5 -> System.out.println("Send email\n");
-                case 6 -> menuActions.exportExcel();
-                case 7 -> {
+                case 5 -> {
                     System.out.println("Bye-bye");
                     System.exit(0);
                 }
@@ -44,6 +43,20 @@ public class Menu {
             }
 
         }
+    }
+
+    public void loadMenu(){
+        sb.setLength(0);
+        sb.append("-----------------------------------------\n");
+        sb.append("FLIGHTS MANAGER\n");
+        sb.append("Select an option\n");
+        sb.append("1. Add flight\n");
+        sb.append("2. Flights list\n");
+        sb.append("3. Update flights\n");
+        sb.append("4. Search flight\n");
+        sb.append("5. Exit\n");
+        sb.append("------------------------------------------\n");
+        System.out.println(sb);
     }
 
 

@@ -182,8 +182,9 @@ public class MenuActions {
         flightServices.printFlight(selectedFlight);
 
         System.out.println("Select new status: ");
-        flightStatuses = flightStatusServices.setElements();
-        flightStatusServices.printElements(flightStatuses);
+        /*flightStatuses = flightStatusServices.setElements();
+        flightStatusServices.printElements(flightStatuses);*/
+        printFlightStatusList(flightStatuses);
 
         int status = Integer.parseInt(scanner.next());
         setStatus(status,selectedFlight);
@@ -194,113 +195,36 @@ public class MenuActions {
         cities = cityServices.setElements(countries);
         airports = airportServices.setAirport(cities);
 
-        int id;
+        int id = 0;
         boolean flag = true;
 
-        Airport airport;
+        Airport airport = null;
 
         int selectedOption = 0;
         while(selectedOption < 5){
-            sb.setLength(0);
+            /*sb.setLength(0);
             sb.append("Search flight by: \n");
             sb.append("1. Id\n");
             sb.append("2. Status\n");
             sb.append("3. Departure airport\n");
             sb.append("4. Arrival airport\n");
             sb.append("5. Main menu\n");
-            System.out.println(sb);
+            System.out.println(sb);*/
+            loadSearchFlightMenu();
             selectedOption = Integer.parseInt(scanner.next());
-            int op;
+            int op=0;
             switch (selectedOption) {
                 case 1 -> {
-                    System.out.println("Type flight id\n");
-                    id = Integer.parseInt(scanner.next());
-                    flight = flightServices.searchFlightById(id, flights);
-                    if (flight.getId() == 0) {
-                        System.out.println("Flight not found\n");
-                    } else {
-                        flightServices.printFlight(flight);
-                        System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
-                        op = Integer.parseInt(scanner.next());
-                        if (op == 1) {
-                            List<Flight> flightFound = new ArrayList<>();
-                            flightFound.add(flight);
-                            sheetUtil.exportSheet(flightFound);
-                        }
-                    }
+                    searchFlightbyId(id,op);
                 }
                 case 2 -> {
-                    System.out.println("Select status: \n");
-                    flightStatuses = flightStatusServices.setElements();
-                    flightStatusServices.printElements(flightStatuses);
-                    do {
-                        id = Integer.parseInt(scanner.next());
-                        if (id < 0 || id > flightStatuses.size()) {
-                            System.out.println("Option incorrect. Please enter the correct number: ");
-                        } else {
-                            flag = false;
-                        }
-                    } while (flag);
-                    FlightStatus flightStatus = flightStatusServices.getFlightStatus(id, flightStatuses);
-                    List<Flight> flightsByStatus = flightServices.listByStatus(flightStatus, flights);
-                    if (flightsByStatus.isEmpty()) {
-                        System.out.println("Flights not found!\n");
-                    } else {
-                        flightServices.printElements(flightsByStatus);
-                        System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
-                        op = Integer.parseInt(scanner.next());
-                        if (op == 1) {
-                            sheetUtil.exportSheet(flightsByStatus);
-                        }
-                    }
+                    searchFlightByStatus(id,flag, op);
                 }
                 case 3 -> {
-                    System.out.println("Select departure Airport: \n");
-                    airportServices.printElements(airports);
-                    do {
-                        id = Integer.parseInt(scanner.next());
-                        if (id < 0 || id > airports.size()) {
-                            System.out.println("Option incorrect. Please enter the correct number: ");
-                        } else {
-                            flag = false;
-                        }
-                    } while (flag);
-                    airport = airportServices.getAirport(id, airports);
-                    List<Flight> flightsByDepartureAirport = flightServices.listByDepartureAirport(airport, flights);
-                    if (flightsByDepartureAirport.isEmpty()) {
-                        System.out.println("Flights not found!\n");
-                    } else {
-                        flightServices.printElements(flightsByDepartureAirport);
-                        System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
-                        op = Integer.parseInt(scanner.next());
-                        if (op == 1) {
-                            sheetUtil.exportSheet(flightsByDepartureAirport);
-                        }
-                    }
+                    searchFlightByDepartureAirport(id,flag,airports,op,airport);
                 }
                 case 4 -> {
-                    System.out.println("Select arrival Airport: \n");
-                    airportServices.printElements(airports);
-                    do {
-                        id = Integer.parseInt(scanner.next());
-                        if (id < 0 || id > airports.size()) {
-                            System.out.println("Option incorrect. Please enter the correct number: ");
-                        } else {
-                            flag = false;
-                        }
-                    } while (flag);
-                    airport = airportServices.getAirport(id, airports);
-                    List<Flight> flightsByArrivalAirport = flightServices.listByArrivalAirport(airport, flights);
-                    if (flightsByArrivalAirport.isEmpty()) {
-                        System.out.println("Flights not found!\n");
-                    } else {
-                        flightServices.printElements(flightsByArrivalAirport);
-                        System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
-                        op = Integer.parseInt(scanner.next());
-                        if (op == 1) {
-                            sheetUtil.exportSheet(flightsByArrivalAirport);
-                        }
-                    }
+                    searchFlightByArrivalAirport(id,flag,op,airport);
                 }
             }
         }
@@ -432,5 +356,114 @@ public class MenuActions {
         flight.setDelayArrivalTime(LocalTime.parse(scanner.next()));
     }
 
+    public void loadSearchFlightMenu(){
+        sb.setLength(0);
+        sb.append("Search flight by: \n");
+        sb.append("1. Id\n");
+        sb.append("2. Status\n");
+        sb.append("3. Departure airport\n");
+        sb.append("4. Arrival airport\n");
+        sb.append("5. Main menu\n");
+        System.out.println(sb);
+    }
 
+    public void printFlightStatusList(List<FlightStatus> flightStatuses){
+        flightStatuses = flightStatusServices.setElements();
+        flightStatusServices.printElements(flightStatuses);
+    }
+
+    public void searchFlightByStatus(int id,boolean flag, int op){
+        System.out.println("Select status: \n");
+                    /*flightStatuses = flightStatusServices.setElements();
+                    flightStatusServices.printElements(flightStatuses);*/
+        printFlightStatusList(flightStatuses);
+        do {
+            id = Integer.parseInt(scanner.next());
+            if (id < 0 || id > flightStatuses.size()) {
+                System.out.println("Option incorrect. Please enter the correct number: ");
+            } else {
+                flag = false;
+            }
+        } while (flag);
+        FlightStatus flightStatus = flightStatusServices.getFlightStatus(id, flightStatuses);
+        List<Flight> flightsByStatus = flightServices.listByStatus(flightStatus, flights);
+        if (flightsByStatus.isEmpty()) {
+            System.out.println("Flights not found!\n");
+        } else {
+            flightServices.printElements(flightsByStatus);
+            System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
+            op = Integer.parseInt(scanner.next());
+            if (op == 1) {
+                sheetUtil.exportSheet(flightsByStatus);
+            }
+        }
+}
+
+    public void searchFlightbyId(int id, int op){
+        System.out.println("Type flight id\n");
+        id = Integer.parseInt(scanner.next());
+        flight = flightServices.searchFlightById(id, flights);
+        if (flight.getId() == 0) {
+            System.out.println("Flight not found\n");
+        } else {
+            flightServices.printFlight(flight);
+            System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
+            op = Integer.parseInt(scanner.next());
+            if (op == 1) {
+                List<Flight> flightFound = new ArrayList<>();
+                flightFound.add(flight);
+                sheetUtil.exportSheet(flightFound);
+            }
+        }
+    }
+
+    public void searchFlightByDepartureAirport(int id, boolean flag, List<Airport> airports, int op, Airport airport){
+        System.out.println("Select departure Airport: \n");
+        airportServices.printElements(airports);
+        do {
+            id = Integer.parseInt(scanner.next());
+            if (id < 0 || id > airports.size()) {
+                System.out.println("Option incorrect. Please enter the correct number: ");
+            } else {
+                flag = false;
+            }
+        } while (flag);
+        airport = airportServices.getAirport(id, airports);
+        List<Flight> flightsByDepartureAirport = flightServices.listByDepartureAirport(airport, flights);
+        if (flightsByDepartureAirport.isEmpty()) {
+            System.out.println("Flights not found!\n");
+        } else {
+            flightServices.printElements(flightsByDepartureAirport);
+            System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
+            op = Integer.parseInt(scanner.next());
+            if (op == 1) {
+                sheetUtil.exportSheet(flightsByDepartureAirport);
+            }
+        }
+    }
+
+    public void searchFlightByArrivalAirport(int id,boolean flag, int op, Airport airport){
+        System.out.println("Select arrival Airport: \n");
+        airportServices.printElements(airports);
+        do {
+            id = Integer.parseInt(scanner.next());
+            if (id < 0 || id > airports.size()) {
+                System.out.println("Option incorrect. Please enter the correct number: ");
+            } else {
+                flag = false;
+            }
+        } while (flag);
+        airport = airportServices.getAirport(id, airports);
+        List<Flight> flightsByArrivalAirport = flightServices.listByArrivalAirport(airport, flights);
+        if (flightsByArrivalAirport.isEmpty()) {
+            System.out.println("Flights not found!\n");
+        } else {
+            flightServices.printElements(flightsByArrivalAirport);
+            System.out.println("¿Generate excel file?\n 1. Yes\n 2. No\n");
+            op = Integer.parseInt(scanner.next());
+            if (op == 1) {
+                sheetUtil.exportSheet(flightsByArrivalAirport);
+            }
+        }
+    }
 }
