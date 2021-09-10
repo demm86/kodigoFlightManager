@@ -34,8 +34,8 @@ public class Menu {
                 case 2 -> menuActions.showFlights();
                 case 3 -> menuActions.updateFlight();
                 case 4 -> menuActions.searchFlight();
-                case 5 -> System.out.println("Send Email");
-                //case 6 -> menuActions.exportExcel();
+                case 5 -> System.out.println("Send email\n");
+                case 6 -> menuActions.exportExcel();
                 case 7 -> {
                     System.out.println("Bye-bye");
                     System.exit(0);
