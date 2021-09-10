@@ -119,7 +119,7 @@ public class MenuActions {
             }
         }while(selectedAirport.getCode()==null);
 
-        System.out.println("Departure date: (Type format as the example: 2021-12-31)");
+        /*System.out.println("Departure date: (Type format as the example: 2021-12-31)");
         flight.setDepartureDate(LocalDate.parse(scanner.next()));
 
         System.out.println("Departure time: (Type format as the example: 12:43)");
@@ -129,7 +129,8 @@ public class MenuActions {
         flight.setArrivalDate(LocalDate.parse(scanner.next()));
 
         System.out.println("Arrival time: (Type format as the example: 12:43)");
-        flight.setArrivalTime(LocalTime.parse(scanner.next()));
+        flight.setArrivalTime(LocalTime.parse(scanner.next()));*/
+            saveFlight();
 
         do{
             aircraftServices.printElements(aircrafts);
@@ -167,79 +168,7 @@ public class MenuActions {
         flightStatusServices.printElements(flightStatuses);
 
         int status = Integer.parseInt(scanner.next());
-        if(status == 2 || status == 4){
-            FlightStatus selectedFlightStatus =  flightStatusServices.getFlightStatus(status, flightStatuses);
-            flightServices.changeStatus(selectedFlightStatus, selectedFlight, flights);
-            System.out.println("Status updated successfully");
-        }else if(status == 3){
-            String sb = "What is delayed? Departure or Arrival time:\n 1. Departure time\n 2. Arrival time\n";
-            System.out.println(sb);
-            int selectedOption = Integer.parseInt(scanner.next());
-
-            FlightStatus selectedFlightStatus;
-            int op;
-            switch (selectedOption) {
-                case 1 -> {
-                    System.out.println("Would the flight still departure the same date: \n");
-                    System.out.println("1. Yes \n2. No");
-                    op = scanner.nextInt();
-                    if (op == 1) {
-                        System.out.println("Please enter the new departure time: (Type format as the example: 12:43)");
-                        flight.setDelayDepartureTime(LocalTime.parse(scanner.next()));
-                    } else if (op == 2) {
-                        System.out.println("Please enter the new departure date: (Type format as the example: 2021-12-31)");
-                        flight.setDelayDepartureDate(LocalDate.parse(scanner.next()));
-                        System.out.println("Please enter the new departure time: (Type format as the example: 12:43)");
-                        flight.setDelayDepartureTime(LocalTime.parse(scanner.next()));
-                    }
-                    selectedFlightStatus = flightStatusServices.getFlightStatus(status, flightStatuses);
-                    flightServices.changeStatus(selectedFlightStatus, selectedFlight, flights);
-                    System.out.println("Departure time updated successfully");
-                }
-                case 2 -> {
-                    int arrivalAirport;
-                    Airport newArrivalAirport;
-                    System.out.println("Would the flight still arrive the same date: \n");
-                    System.out.println("1. Yes \n2. No");
-                    op = scanner.nextInt();
-                    if (op == 1) {
-                        System.out.println("Please enter the new arrival time: (Type format as the example: 12:43)");
-                        flight.setDelayArrivalTime(LocalTime.parse(scanner.next()));
-                        System.out.println("Do you have to change the arrival airport: \n");
-                        System.out.println("1: Yes \n2. No");
-                        arrivalAirport = scanner.nextInt();
-                        if(arrivalAirport==1){
-                            airportServices.printElements(airports);
-                            System.out.println("Please select the new arrival airport: ");
-                            int newAirportId=Integer.parseInt(scanner.next());
-                            newArrivalAirport =airportServices.getAirport(newAirportId, airports);
-                            flight.setArrivalAirport(newArrivalAirport);
-                        }
-                    }else {
-                        System.out.println("Please enter the new arrival date: (Type format as the example: 2021-12-31)");
-                        flight.setDelayArrivalDate(LocalDate.parse(scanner.next()));
-                        System.out.println("Please enter the new arrival time: (Type format as the example: 12:43)");
-                        flight.setDelayArrivalTime(LocalTime.parse(scanner.next()));
-                        System.out.println("Do you have to change the arrival airport: \n");
-                        System.out.println("1: Yes \n2. No");
-                        arrivalAirport = scanner.nextInt();
-                        if(arrivalAirport==1){
-                            airportServices.printElements(airports);
-                            System.out.println("Please select the new arrival airport: ");
-                            int newAirportId=Integer.parseInt(scanner.next());
-                            newArrivalAirport =airportServices.getAirport(newAirportId, airports);
-                            flight.setArrivalAirport(newArrivalAirport);
-                        }
-                    }
-                    selectedFlightStatus = flightStatusServices.getFlightStatus(status, flightStatuses);
-                    flightServices.changeStatus(selectedFlightStatus, selectedFlight, flights);
-                    System.out.println("Arrival time updated successfully");
-                }
-                default -> System.out.println("Option incorrect");
-            }
-        }else{
-            System.out.println("Status incorrect");
-        }
+        setStatus(status,selectedFlight);
     }
 
     public void searchFlight(){
@@ -358,4 +287,132 @@ public class MenuActions {
             }
         }
     }
+
+    public void saveFlight(){
+        System.out.println("Departure date: (Type format as the example: 2021-12-31)");
+        flight.setDepartureDate(LocalDate.parse(scanner.next()));
+
+        System.out.println("Departure time: (Type format as the example: 12:43)");
+        flight.setDepartureTime(LocalTime.parse(scanner.next()));
+
+        System.out.println("Arrival Date: (Type format as the example: 2021-12-31)");
+        flight.setArrivalDate(LocalDate.parse(scanner.next()));
+
+        System.out.println("Arrival time: (Type format as the example: 12:43)");
+        flight.setArrivalTime(LocalTime.parse(scanner.next()));
+    }
+
+    public void setStatus(int status, Flight selectedFlight){
+        if(status == 2 || status == 4){
+            FlightStatus selectedFlightStatus =  flightStatusServices.getFlightStatus(status, flightStatuses);
+            flightServices.changeStatus(selectedFlightStatus, selectedFlight, flights);
+            System.out.println("Status updated successfully");
+        }else if(status == 3){
+            String sb = "What is delayed? Departure or Arrival time:\n 1. Departure time\n 2. Arrival time\n";
+            System.out.println(sb);
+            int selectedOption = Integer.parseInt(scanner.next());
+
+            FlightStatus selectedFlightStatus;
+            int op;
+            switch (selectedOption) {
+                case 1 -> {
+                    System.out.println("Would the flight still departure the same date: \n");
+                    System.out.println("1. Yes \n2. No");
+                    op = scanner.nextInt();
+                    /*if (op == 1) {
+                        System.out.println("Please enter the new departure time: (Type format as the example: 12:43)");
+                        flight.setDelayDepartureTime(LocalTime.parse(scanner.next()));
+                    } else if (op == 2) {
+                        System.out.println("Please enter the new departure date: (Type format as the example: 2021-12-31)");
+                        flight.setDelayDepartureDate(LocalDate.parse(scanner.next()));
+                        System.out.println("Please enter the new departure time: (Type format as the example: 12:43)");
+                        flight.setDelayDepartureTime(LocalTime.parse(scanner.next()));
+                    }*/
+                    readDelayedTime(op);
+                    try {
+                        selectedFlightStatus = flightStatusServices.getFlightStatus(status, flightStatuses);
+                        flightServices.changeStatus(selectedFlightStatus, selectedFlight, flights);
+                        System.out.println("Departure time updated successfully");
+                    } catch (Exception e){
+                        System.out.println("Something went wrong");
+                    }
+
+                }
+                case 2 -> {
+                    int arrivalAirport;
+                    Airport newArrivalAirport;
+                    System.out.println("Would the flight still arrive the same date: \n");
+                    System.out.println("1. Yes \n2. No");
+                    op = scanner.nextInt();
+                    if (op == 1) {
+                        /*System.out.println("Please enter the new arrival time: (Type format as the example: 12:43)");
+                        flight.setDelayArrivalTime(LocalTime.parse(scanner.next()));*/
+                        newArrivalTime();
+
+                        System.out.println("Do you have to change the arrival airport: \n");
+                        System.out.println("1: Yes \n2. No");
+                        arrivalAirport = scanner.nextInt();
+                        if(arrivalAirport==1){
+                            airportServices.printElements(airports);
+                            System.out.println("Please select the new arrival airport: ");
+                            int newAirportId=Integer.parseInt(scanner.next());
+                            newArrivalAirport =airportServices.getAirport(newAirportId, airports);
+                            flight.setArrivalAirport(newArrivalAirport);
+
+                        }
+                    }else {
+                       /* System.out.println("Please enter the new arrival date: (Type format as the example: 2021-12-31)");
+                        flight.setDelayArrivalDate(LocalDate.parse(scanner.next()));
+                        System.out.println("Please enter the new arrival time: (Type format as the example: 12:43)");
+                        flight.setDelayArrivalTime(LocalTime.parse(scanner.next()));*/
+                        newArrivalDate();
+                        System.out.println("Do you have to change the arrival airport: \n");
+                        System.out.println("1: Yes \n2. No");
+                        arrivalAirport = scanner.nextInt();
+                        if(arrivalAirport==1){
+                            airportServices.printElements(airports);
+                            System.out.println("Please select the new arrival airport: ");
+                            int newAirportId=Integer.parseInt(scanner.next());
+                            newArrivalAirport =airportServices.getAirport(newAirportId, airports);
+                            flight.setArrivalAirport(newArrivalAirport);
+
+                        }
+                    }
+                    selectedFlightStatus = flightStatusServices.getFlightStatus(status, flightStatuses);
+                    flightServices.changeStatus(selectedFlightStatus, selectedFlight, flights);
+                    System.out.println("Arrival time updated successfully");
+                }
+                default -> System.out.println("Option incorrect");
+            }
+        }else{
+            System.out.println("Status incorrect");
+        }
+    }
+
+    public void readDelayedTime(int op ){
+        if (op == 1) {
+            System.out.println("Please enter the new departure time: (Type format as the example: 12:43)");
+            flight.setDelayDepartureTime(LocalTime.parse(scanner.next()));
+        } else if (op == 2) {
+            System.out.println("Please enter the new departure date: (Type format as the example: 2021-12-31)");
+            flight.setDelayDepartureDate(LocalDate.parse(scanner.next()));
+            System.out.println("Please enter the new departure time: (Type format as the example: 12:43)");
+            flight.setDelayDepartureTime(LocalTime.parse(scanner.next()));
+        }
+
+    }
+
+    public void newArrivalTime(){
+        System.out.println("Please enter the new arrival time: (Type format as the example: 12:43)");
+        flight.setDelayArrivalTime(LocalTime.parse(scanner.next()));
+    }
+
+    public void newArrivalDate(){
+        System.out.println("Please enter the new arrival date: (Type format as the example: 2021-12-31)");
+        flight.setDelayArrivalDate(LocalDate.parse(scanner.next()));
+        System.out.println("Please enter the new arrival time: (Type format as the example: 12:43)");
+        flight.setDelayArrivalTime(LocalTime.parse(scanner.next()));
+    }
+
+
 }
