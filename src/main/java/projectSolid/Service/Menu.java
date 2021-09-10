@@ -7,7 +7,19 @@ public class Menu {
     StringBuilder sb = new StringBuilder();
     Scanner scanner = new Scanner(System.in);
     MenuActions menuActions = new MenuActions();
-    public void shoMenu() {
+
+    private static Menu get_Instance = null;
+    private Menu () {};
+
+    public static Menu getInstance(){
+
+        if (get_Instance == null)
+                get_Instance= new Menu();
+        return get_Instance;
+    }
+
+
+    public void showMenu() {
 
 
         int option;
